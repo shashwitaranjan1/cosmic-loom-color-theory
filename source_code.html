@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Narayana's Cosmic Loom — Varna-Vyuha</title>
+<meta name="description" content="A colour-theory weaving game set on the loom every hue is spun on.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   NARAYANA'S COSMIC LOOM — VARNA-VYUHA
+   One file. No assets. Everything below is drawn by the browser.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  color-scheme: dark;
+  /* gold leaf */
+  --gold:#E7B44C; --gold-hi:#FFEEBC; --gold-lo:#8A5C19; --gold-deep:#5A3A0C;
+  /* the milk-sea palette, lifted from the reference skies */
+  --cream:#FBF3E2; --parch:#F5E6C4; --ink:#41301A;
+  --navy:#0A1B31; --navy-2:#14304F;
+  --turq:#5FD2CE; --turq-deep:#1E7E86;
+  --glass:rgba(10,27,49,.50);
+  --glass-hi:rgba(255,238,188,.34);
+  /* type */
+  --display:'Marcellus','Palatino Linotype','Book Antiqua',Georgia,serif;
+  --body:'Cormorant Garamond','Iowan Old Style',Georgia,serif;
+  --deva:'Tiro Devanagari Sanskrit','Nirmala UI',serif;
+  /* rhythm */
+  --r1:6px; --r2:12px; --r3:20px;
+  --safeT:env(safe-area-inset-top,0px);
+  --safeB:env(safe-area-inset-bottom,0px);
+  --safeL:env(safe-area-inset-left,0px);
+  --safeR:env(safe-area-inset-right,0px);
+}
+@media (prefers-color-scheme: light){ :root{ color-scheme: dark; } } /* art-directed: the sky is fixed */
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none}
+html{touch-action:pan-x pan-y}
+body{
+  background:#8FC3D8;
+  font-family:var(--body); color:var(--cream);
+  font-size:clamp(15px,1.05vw + 10px,19px); line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  overscroll-behavior:none;
+}
+.help-card,.help-card *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:4px}
+
+/* ─────────────────────────────  THE SKY  ───────────────────────────── */
+#sky{position:fixed;inset:0;overflow:hidden;z-index:0;contain:strict}
+
+/* base gradient: golden sunrise above, milk-sea turquoise below */
+.grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,
+      #F8C97E 0%, #FBD9A0 10%, #FDE7C0 22%, #FCEFD8 33%,
+      #F3EEDF 42%, #DDEDE8 50%, #B9E2E0 58%,
+      #7FCFD2 70%, #48AFBE 82%, #2C87A4 93%, #1E6B8C 100%);
+}
+/* the sun, low and left, as in the reference plates */
+.sun{
+  position:absolute;left:16%;top:30%;width:52vmax;height:52vmax;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,
+    rgba(255,252,240,.98) 0%, rgba(255,240,196,.85) 6%,
+    rgba(255,224,150,.55) 14%, rgba(255,206,120,.28) 26%,
+    rgba(255,196,110,.12) 42%, rgba(255,196,110,0) 66%);
+  animation:breathe 14s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.92;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}}
+
+/* volumetric cloud decks — fractal noise, three parallax speeds */
+.deck{position:absolute;left:-60%;width:220%;background-repeat:repeat-x;background-size:50% 100%;pointer-events:none}
+.deck-a{
+  top:4%;height:34%;opacity:.85;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='520'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035 0.011' numOctaves='5' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.985 0 0 0 0 0.955 1.9 0 0 0 -0.62'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1400' height='520' filter='url(%23c)'/%3E%3C/svg%3E");
+  animation:drift 190s linear infinite;
+}
+.deck-b{
+  top:26%;height:30%;opacity:.7;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='460'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.016' numOctaves='5' seed='29'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.97 0 0 0 0 0.92 2.2 0 0 0 -0.78'/%3E%3CfeGaussianBlur stdDeviation='3.5'/%3E%3C/filter%3E%3Crect width='1400' height='460' filter='url(%23c)'/%3E%3C/svg%3E");
+  animation:drift 128s linear infinite reverse;
+}
+.deck-c{
+  top:40%;height:22%;opacity:.55;filter:blur(1px);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='360'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009 0.03' numOctaves='4' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.99 0 0 0 0 0.97 2.6 0 0 0 -1.05'/%3E%3CfeGaussianBlur stdDeviation='2'/%3E%3C/filter%3E%3Crect width='1400' height='360' filter='url(%23c)'/%3E%3C/svg%3E");
+  animation:drift 84s linear infinite;
+}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* god rays fanning from the sun */
+.rays{
+  position:absolute;left:16%;top:30%;width:190vmax;height:190vmax;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(from 0deg,
+    rgba(255,244,214,.30) 0deg 1.1deg,
+    rgba(255,244,214,0) 1.1deg 7deg);
+  -webkit-mask-image:radial-gradient(circle,#000 4%,rgba(0,0,0,.65) 18%,transparent 52%);
+  mask-image:radial-gradient(circle,#000 4%,rgba(0,0,0,.65) 18%,transparent 52%);
+  mix-blend-mode:screen;opacity:.75;
+  animation:turn 260s linear infinite;
+}
+@keyframes turn{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* distant floating temples — pure CSS silhouettes on the horizon */
+.isles{position:absolute;left:0;right:0;top:44%;height:16%;opacity:.42;filter:blur(.6px)}
+.isle{position:absolute;bottom:0;transform-origin:50% 100%}
+.isle svg{display:block;width:100%;height:auto}
+.i1{left:6%;width:16%;animation:bob 26s ease-in-out infinite}
+.i2{left:30%;width:11%;opacity:.7;animation:bob 34s ease-in-out infinite -6s}
+.i3{left:62%;width:20%;animation:bob 30s ease-in-out infinite -14s}
+.i4{left:86%;width:12%;opacity:.6;animation:bob 38s ease-in-out infinite -3s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.1%)}}
+
+/* the water mirror */
+.water{
+  position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:
+    linear-gradient(180deg,
+      rgba(250,236,200,.55) 0%, rgba(190,226,222,.30) 9%,
+      rgba(90,200,206,.10) 22%, rgba(30,120,150,.30) 62%, rgba(12,72,104,.55) 100%),
+    linear-gradient(180deg,#8FD4D2 0%,#46ADBC 42%,#1E6E90 100%);
+}
+.water .refl{
+  position:absolute;inset:0;overflow:hidden;opacity:.5;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.5) 45%,transparent 85%);
+  mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.5) 45%,transparent 85%);
+}
+.water .refl .deck{top:0;height:100%;transform-origin:50% 0;animation-duration:240s}
+.water .refl-inner{position:absolute;inset:0;transform:scaleY(-1);filter:blur(2px) saturate(.9)}
+.shimmer{
+  position:absolute;left:-10%;right:-10%;bottom:0;height:100%;
+  background:repeating-linear-gradient(180deg,
+    rgba(255,248,226,.30) 0 1px, rgba(255,248,226,0) 1px 9px);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 100%);
+  mix-blend-mode:screen;opacity:.5;
+  animation:swell 9s linear infinite;
+}
+@keyframes swell{from{transform:translateY(0) scaleY(1)}50%{transform:translateY(-3px) scaleY(1.02)}to{transform:translateY(0) scaleY(1)}}
+.horizonglow{
+  position:absolute;left:0;right:0;bottom:34%;height:12%;
+  background:linear-gradient(180deg,transparent,rgba(255,236,190,.55) 60%,rgba(255,244,216,.8));
+  filter:blur(6px);pointer-events:none;
+}
+/* drifting motes of light */
+.motes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;border-radius:50%;background:radial-gradient(circle,#FFF8E0,rgba(255,240,200,0) 70%);animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(0) translateX(0);opacity:0}
+  10%{opacity:var(--o)} 90%{opacity:var(--o)}
+  to{transform:translateY(-70vh) translateX(var(--dx));opacity:0}}
+.vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(20,50,80,.18) 78%,rgba(14,40,66,.38) 100%)}
+
+/* mouse/tilt-tracking parallax: a thin pivot the sky layers ride on, so
+   their own drift/turn/breathe keyframes are never touched */
+.plx{position:absolute;inset:0;pointer-events:none;will-change:transform}
+#isles{will-change:transform}
+
+/* ─────────────────────────────  STAGE  ───────────────────────────── */
+#app{position:fixed;inset:0;z-index:2;display:block}
+
+/* ── Title ── */
+#title{
+  position:absolute;inset:0;display:grid;place-items:center;
+  padding:calc(24px + var(--safeT)) 20px calc(24px + var(--safeB));
+  background:radial-gradient(ellipse at 50% 55%,rgba(8,24,44,.34),rgba(8,24,44,.08) 60%,transparent 80%);
+  z-index:40;
+}
+#title.gone{opacity:0;pointer-events:none;transform:scale(1.06);transition:opacity 1s ease,transform 1.4s ease}
+.title-in{text-align:center;max-width:min(92vw,720px);animation:titleIn 1.8s cubic-bezier(.2,.7,.2,1) both}
+@keyframes titleIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.chakra{width:clamp(96px,17vmin,170px);height:auto;margin:0 auto .4em;display:block;filter:drop-shadow(0 0 22px rgba(255,220,150,.75))}
+.chakra .spin{transform-origin:100px 100px;animation:turn 48s linear infinite}
+.chakra .spin-r{transform-origin:100px 100px;animation:turn 72s linear infinite reverse}
+.deva-title{font-family:var(--deva);font-size:clamp(15px,2.4vw,22px);color:#FFF3D2;letter-spacing:.04em;
+  text-shadow:0 1px 10px rgba(120,70,10,.6);margin:0 0 .25em}
+h1{
+  font-family:var(--display);font-weight:400;margin:0;
+  font-size:clamp(30px,6.6vw,68px);line-height:1.05;letter-spacing:.012em;
+  color:#FFF9EA;
+  text-shadow:0 2px 0 rgba(120,76,16,.30),0 0 34px rgba(255,214,140,.6),0 10px 40px rgba(60,30,0,.35);
+}
+h1 .thin{display:block;font-size:.46em;letter-spacing:.34em;margin-top:.7em;color:#FFE9B8;text-shadow:0 0 18px rgba(255,200,120,.7)}
+.rule{width:min(60%,340px);height:1px;margin:1.5em auto 1.2em;
+  background:linear-gradient(90deg,transparent,var(--gold-hi),transparent);position:relative}
+.rule::after{content:'';position:absolute;left:50%;top:50%;width:9px;height:9px;transform:translate(-50%,-50%) rotate(45deg);
+  background:var(--gold-hi);box-shadow:0 0 12px var(--gold-hi)}
+.tagline{margin:0 auto 2em;max-width:52ch;color:#FFF1D8;font-size:clamp(15px,1.8vw,20px);
+  text-shadow:0 1px 2px rgba(40,22,2,.6),0 0 24px rgba(60,32,4,.5)}
+.title-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ── ornate gold button ── */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:.6em;
+  padding:.72em 1.9em;font-family:var(--display);font-size:clamp(14px,1.5vw,18px);letter-spacing:.06em;
+  color:#3A2708;background:linear-gradient(180deg,#FFF0C4,#F0C96E 46%,#D9A33E 54%,#F2DA9C);
+  border-radius:999px;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 -2px 6px rgba(120,70,10,.35) inset,
+             0 6px 20px rgba(80,44,4,.35),0 0 0 1px rgba(255,236,180,.9),0 0 0 3px rgba(122,80,20,.35);
+  transition:transform .18s ease,box-shadow .25s ease,filter .25s ease;overflow:hidden;
+}
+.btn::after{content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-18deg)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn:hover::after{animation:sheen .85s ease}
+.btn:active{transform:translateY(0) scale(.98)}
+@keyframes sheen{to{left:130%}}
+.btn.ghost{
+  color:#FFF0CE;background:var(--glass);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  box-shadow:0 0 0 1px rgba(255,228,170,.55),0 6px 22px rgba(6,20,40,.4),0 1px 0 rgba(255,255,255,.18) inset;
+}
+.btn.ghost:hover{background:rgba(16,40,70,.62)}
+.btn[disabled]{opacity:.45;pointer-events:none;filter:grayscale(.4)}
+
+/* ─────────────────  HUD: the Guru's Scroll  ───────────────── */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:20}
+#hud > *{pointer-events:auto}
+
+.scroll-wrap{
+  position:absolute;top:calc(10px + var(--safeT));left:50%;transform:translateX(-50%);
+  width:min(92vw,660px);
+  animation:dropIn .8s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes dropIn{from{opacity:0;transform:translateX(-50%) translateY(-22px)}to{opacity:1;transform:translateX(-50%)}}
+.scroll{display:grid;grid-template-columns:18px 1fr 18px;align-items:stretch;filter:drop-shadow(0 10px 26px rgba(50,28,4,.42))}
+.roll{
+  background:linear-gradient(90deg,#8A5C19,#D9A94F 35%,#FFE6A8 52%,#C08F36 70%,#7A4E13);
+  border-radius:9px;box-shadow:0 0 0 1px rgba(90,58,12,.6) inset;
+  position:relative;
+}
+.roll::before,.roll::after{content:'';position:absolute;left:-3px;right:-3px;height:9px;
+  background:linear-gradient(90deg,#7A4E13,#FFE6A8 50%,#7A4E13);border-radius:4px}
+.roll::before{top:-5px}.roll::after{bottom:-5px}
+.sheet{
+  background:linear-gradient(180deg,#FDF4DE,#F3E2BC 55%,#E9D3A4);
+  padding:.72em 1.25em .85em;text-align:center;color:var(--ink);
+  box-shadow:0 0 0 1px rgba(150,108,44,.45) inset,0 2px 8px rgba(120,80,20,.18) inset;
+  border-radius:3px;
+}
+.sheet .deva{font-family:var(--deva);font-size:.76em;color:#8A6220;letter-spacing:.02em;line-height:1.2}
+.obj-title{font-family:var(--display);font-size:clamp(16px,2.2vw,21px);margin:.1em 0 .18em;color:#3B2708;letter-spacing:.01em}
+.obj-text{margin:0 auto;max-width:56ch;font-size:clamp(14px,1.55vw,17px);line-height:1.45;color:#55401C}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:.55em}
+.chip{
+  display:inline-flex;align-items:center;gap:.4em;font-family:var(--display);
+  font-size:clamp(10px,1.15vw,12.5px);letter-spacing:.03em;
+  padding:.28em .7em;border-radius:999px;color:#6B4E1C;
+  background:rgba(180,140,70,.14);box-shadow:0 0 0 1px rgba(150,110,45,.4) inset;
+  transition:all .35s ease;
+}
+.chip i{width:7px;height:7px;border-radius:50%;background:#B79A64;box-shadow:0 0 0 1px rgba(120,84,26,.5);transition:all .35s}
+.chip.on{color:#2C5B33;background:rgba(84,168,104,.18);box-shadow:0 0 0 1px rgba(58,140,80,.55) inset}
+.chip.on i{background:#49A85F;box-shadow:0 0 8px rgba(73,168,95,.9)}
+.scroll-wrap.shake{animation:shake .5s}
+@keyframes shake{10%,90%{transform:translateX(calc(-50% - 3px))}30%,70%{transform:translateX(calc(-50% + 5px))}50%{transform:translateX(calc(-50% - 5px))}}
+
+/* corner plates */
+.plate{
+  position:absolute;display:flex;align-items:center;gap:.7em;
+  padding:.5em .95em;border-radius:var(--r2);
+  background:var(--glass);backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);
+  box-shadow:0 0 0 1px var(--glass-hi),0 8px 26px rgba(6,20,40,.35),0 1px 0 rgba(255,255,255,.14) inset;
+  font-family:var(--display);font-size:clamp(11px,1.25vw,14px);letter-spacing:.05em;color:#FFEFCC;
+}
+.plate-l{top:calc(12px + var(--safeT));left:calc(12px + var(--safeL));flex-direction:column;align-items:flex-start;gap:.15em}
+.plate-l .ch-no{font-size:.82em;color:#F0CF89;letter-spacing:.22em}
+.plate-l .ch-name{font-size:1.12em;color:#FFF6E2}
+.plate-r{top:calc(12px + var(--safeT));right:calc(12px + var(--safeR));gap:.45em}
+.icbtn{
+  width:2.2em;height:2.2em;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,238,190,.10);box-shadow:0 0 0 1px rgba(255,228,170,.35) inset;
+  transition:background .2s,transform .2s;
+}
+.icbtn:hover{background:rgba(255,238,190,.25);transform:translateY(-1px)}
+.icbtn.live{box-shadow:0 0 0 1px rgba(255,236,180,.75) inset,0 0 12px rgba(255,212,120,.6);animation:markPulse 3.4s ease-in-out infinite}
+.icbtn svg{width:1.05em;height:1.05em;fill:none;stroke:#FFE9B8;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.strands{display:flex;align-items:baseline;gap:.35em;padding-right:.2em}
+.strands b{font-size:1.35em;color:#FFF6E2;font-weight:400}
+.strands span{font-size:.8em;color:#EBCB88;letter-spacing:.14em}
+
+/* ─────────────────────────  THE LOOM  ───────────────────────── */
+#board{
+  position:absolute;inset:0;display:grid;place-items:center;
+  padding:calc(118px + var(--safeT)) 16px calc(150px + var(--safeB));
+  z-index:10;
+}
+#board.hidden{opacity:0;pointer-events:none}
+.loom{
+  --cell:clamp(34px,min(11vw,8vh),70px); --gap:7px;
+  position:relative;padding:clamp(16px,2.4vmin,26px);
+  animation:loomIn 1.1s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes loomIn{from{opacity:0;transform:translateY(26px) scale(.94)}to{opacity:1;transform:none}}
+.loom-float{animation:float 11s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+/* frame */
+.frame{position:absolute;inset:0;pointer-events:none}
+.frame .pane{
+  position:absolute;inset:0;border-radius:var(--r3);
+  background:linear-gradient(160deg,rgba(255,250,235,.22),rgba(140,200,220,.10) 45%,rgba(10,40,70,.20));
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  box-shadow:
+    0 0 0 1px rgba(255,236,186,.65),
+    0 0 0 5px rgba(120,80,20,.22),
+    0 0 0 6px rgba(255,232,176,.35),
+    0 18px 50px rgba(8,30,56,.45),
+    0 0 70px rgba(255,214,140,.22);
+}
+.frame .corner{position:absolute;width:clamp(26px,4.4vmin,44px);height:auto;fill:none;stroke:#FFE8B4;stroke-width:1.5;
+  filter:drop-shadow(0 0 6px rgba(255,210,130,.9))}
+.frame .c1{top:-9px;left:-9px}
+.frame .c2{top:-9px;right:-9px;transform:scaleX(-1)}
+.frame .c3{bottom:-9px;left:-9px;transform:scaleY(-1)}
+.frame .c4{bottom:-9px;right:-9px;transform:scale(-1)}
+.finial{position:absolute;left:50%;transform:translateX(-50%);width:clamp(30px,5vmin,52px);height:auto;
+  fill:none;stroke:#FFEDC4;stroke-width:1.4;filter:drop-shadow(0 0 8px rgba(255,214,140,.9))}
+.finial.top{top:calc(-1 * clamp(18px,3vmin,30px))}
+.finial.bot{bottom:calc(-1 * clamp(18px,3vmin,30px));transform:translateX(-50%) scaleY(-1)}
+
+/* warp & weft threads behind the shuttles */
+.grid{
+  position:relative;display:grid;gap:var(--gap);
+  grid-template-columns:repeat(6,var(--cell));
+  grid-template-rows:repeat(6,var(--cell));
+}
+.grid::before{
+  content:'';position:absolute;inset:calc(-1 * var(--gap)) -4px;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 calc(var(--cell)/2 - 1px),rgba(255,232,180,.30) calc(var(--cell)/2 - 1px) calc(var(--cell)/2),transparent calc(var(--cell)/2) calc(var(--cell) + var(--gap))),
+    repeating-linear-gradient(0deg,transparent 0 calc(var(--cell)/2 - 1px),rgba(255,232,180,.14) calc(var(--cell)/2 - 1px) calc(var(--cell)/2),transparent calc(var(--cell)/2) calc(var(--cell) + var(--gap)));
+  pointer-events:none;border-radius:8px;
+}
+
+/* a shuttle */
+.cell{
+  position:relative;border-radius:9px;
+  background:linear-gradient(150deg,rgba(255,252,242,.20),rgba(120,180,205,.10));
+  box-shadow:0 0 0 1px rgba(255,238,196,.40) inset,0 2px 10px rgba(10,34,60,.22);
+  transition:transform .18s cubic-bezier(.2,.8,.3,1),box-shadow .25s ease;
+  overflow:visible;
+}
+.cell::after{ /* hover halo */
+  content:'';position:absolute;inset:-4px;border-radius:13px;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(255,226,150,.45),transparent 70%);
+  opacity:0;transition:opacity .25s ease;
+}
+.cell:hover{transform:translateY(-3px) scale(1.04);
+  box-shadow:0 0 0 1px rgba(255,246,214,.95) inset,0 0 20px rgba(255,214,130,.65),0 8px 18px rgba(8,30,56,.3)}
+.cell:hover::after{opacity:1}
+.cell.mark{box-shadow:0 0 0 2px rgba(255,235,170,.95) inset,0 0 22px rgba(255,208,120,.7);animation:markPulse 2.4s ease-in-out infinite}
+@keyframes markPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.16)}}
+.cell.deny{animation:nudge .4s}
+.cell:active{transform:translateY(-1px) scale(.96)}
+@keyframes nudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.thread{
+  position:absolute;inset:3px;border-radius:7px;opacity:0;transform:scale(.4) rotate(-8deg);
+  background-color:transparent;
+  transition:background-color .6s cubic-bezier(.4,0,.2,1),opacity .35s ease,transform .45s cubic-bezier(.2,1.3,.4,1),box-shadow .6s ease;
+}
+.thread.on{opacity:1;transform:none}
+.thread::before{ /* woven texture + form */
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 2px,transparent 2px 5px),
+    repeating-linear-gradient(-45deg,rgba(0,0,0,.12) 0 2px,transparent 2px 5px),
+    linear-gradient(152deg,rgba(255,255,255,.5),rgba(255,255,255,0) 44%,rgba(0,0,0,.26));
+  mix-blend-mode:overlay;
+}
+.thread::after{ /* sheen */
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  box-shadow:0 1px 0 rgba(255,255,255,.45) inset,0 -2px 5px rgba(0,0,0,.2) inset;
+}
+.thread.morph{animation:morph .75s cubic-bezier(.3,1.4,.4,1)}
+@keyframes morph{0%{transform:scale(1)}35%{transform:scale(1.22) rotate(3deg);filter:brightness(1.6) saturate(1.3)}100%{transform:scale(1)}}
+
+/* ripple & sparks */
+.fx{position:absolute;pointer-events:none;z-index:14}
+.ripple{position:absolute;border-radius:50%;border:2px solid rgba(255,240,200,.9);
+  animation:rip .85s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes rip{from{transform:scale(.2);opacity:.95}to{transform:scale(3.2);opacity:0}}
+.spark{position:absolute;border-radius:50%;animation:sp .9s cubic-bezier(.1,.6,.3,1) forwards}
+@keyframes sp{from{transform:translate(0,0) scale(1);opacity:1}
+  to{transform:translate(var(--tx),var(--ty)) scale(.2);opacity:0}}
+
+/* readout under the loom */
+.readout{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:calc(-1 * clamp(30px,5vmin,44px));white-space:nowrap;
+  font-family:var(--display);font-size:clamp(11px,1.3vw,14px);letter-spacing:.14em;
+  color:#FFF3D6;text-shadow:0 1px 10px rgba(40,20,0,.7);opacity:0;transition:opacity .3s}
+.readout.on{opacity:.92}
+
+/* the tactile glow-trail a spool leaves when it's picked up */
+#bankFx{position:absolute;inset:0;pointer-events:none;z-index:23;overflow:visible}
+.sglow{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(.3);
+  animation:sglowA .62s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes sglowA{0%{opacity:.85;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.6)}}
+.strail{position:absolute;border-radius:50%;transform:translate(-50%,-50%);
+  box-shadow:0 0 6px currentColor;animation:strailA .85s cubic-bezier(.15,.6,.25,1) forwards}
+@keyframes strailA{from{transform:translate(-50%,-50%) translate(0,0) scale(1);opacity:1}
+  to{transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(.2);opacity:0}}
+
+/* ─────────────────────  THREAD BANK  ───────────────────── */
+#bank{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:calc(14px + var(--safeB));
+  display:flex;align-items:center;gap:clamp(6px,1.4vw,14px);
+  padding:.55em .7em;border-radius:999px;max-width:calc(100vw - 24px);
+  background:var(--glass);backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);
+  box-shadow:0 0 0 1px var(--glass-hi),0 -1px 0 rgba(255,255,255,.14) inset,0 14px 40px rgba(6,20,40,.45);
+  z-index:22;animation:riseIn .9s cubic-bezier(.2,.8,.25,1) both .2s;
+}
+@keyframes riseIn{from{opacity:0;transform:translateX(-50%) translateY(26px)}to{opacity:1;transform:translateX(-50%)}}
+#bank.hidden{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px);transition:.4s}
+.spool{
+  position:relative;width:clamp(42px,6.4vw,58px);height:clamp(42px,6.4vw,58px);border-radius:50%;
+  display:grid;place-items:center;transition:transform .2s cubic-bezier(.2,1.4,.4,1),filter .2s;
+}
+.spool svg{width:100%;height:100%;overflow:visible}
+.spool .ring{fill:none;stroke:rgba(255,235,185,.5);stroke-width:2}
+.spool:hover{transform:translateY(-5px)}
+.spool:active{transform:translateY(-6px) scale(.90);filter:brightness(1.12)}
+.spool.sel{transform:translateY(-7px)}
+.spool.sel .ring{stroke:#FFF3D2;stroke-width:3;filter:drop-shadow(0 0 8px #FFE29A)}
+.spool.sel::after{content:'';position:absolute;inset:-7px;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(255,240,200,.85),0 0 24px rgba(255,214,130,.85);animation:markPulse 2s ease-in-out infinite}
+.spool .lbl{position:absolute;bottom:-1.15em;left:50%;transform:translateX(-50%);
+  font-family:var(--display);font-size:clamp(8px,1vw,10px);letter-spacing:.1em;color:#FFE9B8;opacity:0;transition:opacity .2s;white-space:nowrap}
+.spool:hover .lbl,.spool.sel .lbl{opacity:.95}
+.bank-div{width:1px;align-self:stretch;margin:.25em .1em;background:linear-gradient(180deg,transparent,rgba(255,232,180,.5),transparent)}
+.btn-check{padding:.62em 1.35em;font-size:clamp(12px,1.35vw,16px)}
+
+/* ─────────────────────  DIALOGUE  ───────────────────── */
+#dlg{
+  position:absolute;left:0;right:0;bottom:0;z-index:60;
+  padding:0 clamp(10px,3vw,46px) calc(clamp(14px,3vh,34px) + var(--safeB));
+  display:flex;justify-content:center;align-items:flex-end;
+  opacity:0;pointer-events:none;transform:translateY(24px);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.25,1);
+}
+#dlg.on{opacity:1;pointer-events:auto;transform:none}
+#dlg::before{content:'';position:absolute;left:0;right:0;bottom:0;height:150%;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(6,22,42,.30) 42%,rgba(6,22,42,.62))}
+.dlg-in{position:relative;width:min(100%,940px);display:flex;align-items:flex-end;gap:clamp(6px,1.6vw,20px)}
+.portrait{
+  position:relative;flex:0 0 auto;width:clamp(96px,17vw,215px);margin-bottom:-6px;
+  filter:drop-shadow(0 12px 26px rgba(6,20,40,.55));
+  transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.25,1);
+  animation:swayP 9s ease-in-out infinite;
+}
+@keyframes swayP{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-.6deg)}}
+.portrait.swap{opacity:0;transform:translateY(14px) scale(.96)}
+.portrait svg{width:100%;height:auto;display:block}
+.pf-lid{transform-box:fill-box;transform-origin:top;animation:blink 6.8s infinite}
+@keyframes blink{0%,95.5%,100%{transform:scaleY(0)}97.6%{transform:scaleY(1)}}
+.box{
+  position:relative;flex:1 1 auto;min-width:0;
+  background:linear-gradient(180deg,rgba(9,26,48,.80),rgba(6,19,38,.88));
+  backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border-radius:var(--r2);padding:1.45em 1.5em 1.25em;
+  box-shadow:0 0 0 1px rgba(255,228,172,.55),0 0 0 4px rgba(120,82,22,.18),
+             0 18px 46px rgba(4,16,34,.55),0 1px 0 rgba(255,255,255,.14) inset;
+}
+.box::before,.box::after{content:'';position:absolute;width:16px;height:16px;border:1px solid rgba(255,232,180,.85);pointer-events:none}
+.box::before{top:7px;left:7px;border-right:0;border-bottom:0;border-radius:4px 0 0 0}
+.box::after{bottom:7px;right:7px;border-left:0;border-top:0;border-radius:0 0 4px 0}
+.nameplate{
+  position:absolute;top:-1.05em;left:1.4em;display:flex;align-items:baseline;gap:.6em;
+  padding:.25em 1.15em;border-radius:6px;
+  background:linear-gradient(180deg,#FFF0C6,#EBC069 48%,#CE9B3C 52%,#F0D89A);
+  box-shadow:0 2px 10px rgba(40,20,0,.45),0 0 0 1px rgba(255,240,200,.9);
+}
+.nameplate .nm{font-family:var(--display);font-size:clamp(13px,1.5vw,17px);color:#33220A;letter-spacing:.05em}
+.nameplate .ti{font-family:var(--body);font-style:italic;font-size:clamp(10px,1.1vw,12.5px);color:#6B4D18}
+.line{margin:.15em 0 0;min-height:3.4em;font-size:clamp(15px,1.75vw,21px);line-height:1.5;color:#FDF4E2;max-width:62ch}
+.line .cur{display:inline-block;width:.42em;height:1.05em;vertical-align:-.16em;margin-left:.06em;
+  background:linear-gradient(180deg,#FFE9B0,#E0A94A);animation:curs .9s steps(2) infinite}
+@keyframes curs{50%{opacity:0}}
+.dlg-foot{display:flex;align-items:center;justify-content:space-between;gap:1em;margin-top:.7em}
+.hintline{font-size:clamp(11px,1.15vw,13px);letter-spacing:.12em;color:#C8B48A;font-family:var(--display)}
+.btn-cont{padding:.5em 1.4em;font-size:clamp(12px,1.3vw,15px)}
+.btn-cont .arw{display:inline-block;animation:nod 1.5s ease-in-out infinite}
+@keyframes nod{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
+/* ─────────────────────  BURST + MODAL  ───────────────────── */
+#burst{position:absolute;inset:0;z-index:70;pointer-events:none;display:none}
+#burst.go{display:block}
+.flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,#FFFDF4,rgba(255,232,170,.85) 22%,rgba(255,208,120,.35) 45%,transparent 72%);
+  opacity:0;animation:flashA 1.5s ease-out forwards}
+@keyframes flashA{0%{opacity:0;transform:scale(.4)}12%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+.brays{position:absolute;left:50%;top:46%;width:160vmax;height:160vmax;transform:translate(-50%,-50%) scale(.1);
+  background:repeating-conic-gradient(from 0deg,rgba(255,238,180,.85) 0deg 1.4deg,transparent 1.4deg 9deg);
+  -webkit-mask-image:radial-gradient(circle,#000 2%,rgba(0,0,0,.6) 14%,transparent 40%);
+  mask-image:radial-gradient(circle,#000 2%,rgba(0,0,0,.6) 14%,transparent 40%);
+  mix-blend-mode:screen;animation:braysA 1.9s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes braysA{0%{transform:translate(-50%,-50%) scale(.05) rotate(0);opacity:0}
+  14%{opacity:1}100%{transform:translate(-50%,-50%) scale(1.5) rotate(40deg);opacity:0}}
+/* radial lighting shockwave: a filled pulse (fast) plus a bright rim (slightly slower) */
+.shock{position:absolute;left:50%;top:46%;width:12vmin;height:12vmin;border-radius:50%;
+  transform:translate(-50%,-50%) scale(.08);mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(255,253,240,.98) 0%,rgba(255,232,172,.75) 30%,rgba(255,206,120,.32) 56%,transparent 76%);
+  animation:shockA 1.15s cubic-bezier(.1,.75,.22,1) forwards}
+.shock.s2{width:9vmin;height:9vmin;animation-delay:.16s;animation-duration:1.5s;
+  background:radial-gradient(circle,rgba(255,250,232,.95) 0%,rgba(255,220,150,.55) 38%,transparent 72%)}
+@keyframes shockA{0%{transform:translate(-50%,-50%) scale(.08);opacity:1}
+  55%{opacity:.85}100%{transform:translate(-50%,-50%) scale(13);opacity:0}}
+.bring{position:absolute;left:50%;top:46%;width:30vmin;height:30vmin;border-radius:50%;
+  border:3px solid rgba(255,244,210,.9);transform:translate(-50%,-50%) scale(.2);
+  animation:bringA 1.6s cubic-bezier(.1,.7,.25,1) forwards}
+@keyframes bringA{0%{transform:translate(-50%,-50%) scale(.1);opacity:1;border-width:10px}
+  100%{transform:translate(-50%,-50%) scale(4.6);opacity:0;border-width:1px}}
+.bmote{position:absolute;border-radius:50%;animation:bm 1.9s cubic-bezier(.05,.6,.25,1) forwards}
+@keyframes bm{0%{transform:translate(0,0) scale(1);opacity:1}
+  100%{transform:translate(var(--tx),var(--ty)) scale(.15);opacity:0}}
+
+#modal{position:absolute;inset:0;z-index:80;display:none;place-items:center;
+  padding:calc(20px + var(--safeT)) 18px calc(20px + var(--safeB));
+  background:radial-gradient(ellipse at 50% 50%,rgba(10,28,50,.42),rgba(8,22,42,.78))}
+#modal.on{display:grid}
+.card{
+  position:relative;width:min(92vw,430px);text-align:center;padding:2.1em 1.6em 1.7em;border-radius:var(--r3);
+  background:linear-gradient(180deg,rgba(255,250,238,.97),rgba(246,232,203,.97));
+  color:#3B2A10;
+  box-shadow:0 0 0 1px rgba(255,244,214,.9),0 0 0 5px rgba(138,92,25,.5),0 0 0 7px rgba(255,232,176,.55),
+             0 30px 70px rgba(4,16,34,.6),0 0 90px rgba(255,208,120,.35);
+  animation:cardIn .85s cubic-bezier(.2,1.1,.3,1) both;overflow:hidden;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(26px) scale(.9)}to{opacity:1;transform:none}}
+.card::before{content:'';position:absolute;top:-40%;left:-60%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-16deg);
+  animation:cardSheen 1.5s ease .35s both}
+@keyframes cardSheen{to{left:130%}}
+.card .ribbon{font-family:var(--display);letter-spacing:.34em;font-size:clamp(10px,1.2vw,12px);color:#8A6220}
+.card .emb{width:clamp(80px,17vmin,120px);height:auto;margin:.5em auto .3em;display:block;
+  filter:drop-shadow(0 4px 14px rgba(160,110,30,.5))}
+.card .emb .spin{transform-origin:60px 60px;animation:turn 26s linear infinite}
+.card h3{font-family:var(--display);font-weight:400;font-size:clamp(20px,3vw,27px);margin:.15em 0 .1em;color:#2E1F08}
+.card .deva{font-family:var(--deva);font-size:.9em;color:#8A6220;margin-bottom:.5em}
+.stars{display:flex;justify-content:center;gap:4px;margin:.35em 0 .7em}
+.stars svg{width:clamp(14px,2vw,18px);height:auto;fill:#E5A93A;stroke:#8A5C19;stroke-width:1;
+  opacity:0;transform:scale(.3);animation:starPop .5s cubic-bezier(.2,1.6,.4,1) forwards}
+.card .flav{font-size:clamp(14px,1.6vw,17px);line-height:1.5;color:#5B441E;max-width:34ch;margin:0 auto 1.2em;font-style:italic}
+.card .meta{font-family:var(--display);font-size:clamp(11px,1.2vw,13px);letter-spacing:.1em;color:#8A6220;margin-bottom:1.1em}
+@keyframes starPop{to{opacity:1;transform:none}}
+
+/* toast */
+#toast{
+  position:absolute;left:50%;bottom:calc(104px + var(--safeB));transform:translateX(-50%) translateY(10px);
+  z-index:55;padding:.6em 1.3em;border-radius:999px;max-width:min(86vw,520px);text-align:center;
+  background:rgba(8,24,44,.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 0 0 1px rgba(255,228,172,.5),0 10px 30px rgba(4,16,34,.5);
+  font-size:clamp(13px,1.4vw,16px);color:#FFF0D2;opacity:0;pointer-events:none;transition:.35s cubic-bezier(.2,.8,.25,1);
+}
+#toast.on{opacity:1;transform:translateX(-50%)}
+
+/* help sheet */
+#help{position:absolute;inset:0;z-index:85;display:none;place-items:center;padding:calc(18px + var(--safeT)) 16px calc(18px + var(--safeB));
+  background:rgba(6,20,40,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#help.on{display:grid}
+.help-card{width:min(92vw,560px);max-height:86vh;overflow:auto;padding:1.8em 1.7em;border-radius:var(--r3);
+  background:linear-gradient(180deg,rgba(255,250,238,.97),rgba(244,230,200,.97));color:#3B2A10;
+  box-shadow:0 0 0 1px rgba(255,244,214,.9),0 0 0 5px rgba(138,92,25,.45),0 26px 60px rgba(4,16,34,.55)}
+.help-card h3{font-family:var(--display);font-weight:400;margin:0 0 .1em;font-size:clamp(19px,2.6vw,25px)}
+.help-card h4{font-family:var(--display);font-weight:400;margin:1.25em 0 .2em;font-size:clamp(15px,1.8vw,18px);color:#6B4E1C}
+.help-card p,.help-card li{font-size:clamp(14px,1.55vw,17px);line-height:1.5;color:#54401E;margin:.3em 0}
+.help-card ul{padding-left:1.1em;margin:.2em 0}
+.wheel-fig{display:block;width:min(100%,260px);margin:.8em auto .2em;height:auto}
+.help-card .close{margin-top:1.4em}
+.vol{display:flex;align-items:center;gap:.8em;font-family:var(--display);font-size:clamp(13px,1.5vw,16px);color:#6B4E1C}
+.vol input{flex:1;accent-color:#C08F36;min-width:0;touch-action:pan-y}
+.vol output{min-width:3.4em;text-align:right}
+
+button{touch-action:manipulation}
+@media (max-width:640px){
+  #bank{flex-wrap:wrap;justify-content:center;border-radius:22px;gap:4px;padding:.5em .55em}
+  .spool{width:clamp(36px,10vw,46px);height:clamp(36px,10vw,46px)}
+  .spool .lbl{display:none}
+  .bank-div{display:none}
+  .btn-check{width:100%;justify-content:center;margin-top:.3em;padding:.5em 1em}
+  #board{padding-bottom:calc(178px + var(--safeB))}
+  #toast{bottom:calc(150px + var(--safeB))}
+}
+@media (max-width:620px){
+  .plate-l .ch-name{font-size:1em}
+  .portrait{width:clamp(78px,22vw,120px)}
+  .box{padding:1.3em 1.1em 1em}
+  .scroll-wrap{width:calc(100vw - 16px)}
+  #board{padding:calc(132px + var(--safeT)) 8px calc(146px + var(--safeB))}
+}
+@media (max-height:560px){
+  .scroll-wrap{top:calc(4px + var(--safeT))}
+  .obj-text{display:none}
+  #board{padding-top:calc(92px + var(--safeT))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.12s !important}
+  .deck,.rays,.shimmer,.loom-float,.portrait{animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SKY ══════════════ -->
+<div id="sky" aria-hidden="true">
+  <div class="grad"></div>
+  <div class="plx" data-depth="4"><div class="sun"></div></div>
+  <div class="plx" data-depth="6"><div class="rays"></div></div>
+  <div class="plx" data-depth="9"><div class="deck deck-a"></div></div>
+  <div class="plx" data-depth="16"><div class="deck deck-b"></div></div>
+  <div class="isles" id="isles" data-depth="22"></div>
+  <div class="plx" data-depth="28"><div class="deck deck-c"></div></div>
+  <div class="horizonglow"></div>
+  <div class="water">
+    <div class="refl"><div class="refl-inner">
+      <div class="deck deck-b" style="top:0;height:100%"></div>
+      <div class="deck deck-a" style="top:0;height:100%;opacity:.5"></div>
+    </div></div>
+    <div class="shimmer"></div>
+  </div>
+  <div class="motes" id="motes"></div>
+  <div class="vignette"></div>
+</div>
+
+<!-- ══════════════ STAGE ══════════════ -->
+<div id="app">
+
+  <!-- Title -->
+  <section id="title">
+    <div class="title-in">
+      <svg class="chakra" viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFF6DC"/><stop offset=".5" stop-color="#F0C96E"/><stop offset="1" stop-color="#C08F36"/>
+          </linearGradient>
+        </defs>
+        <g class="spin" fill="none" stroke="url(#gg)" stroke-width="2">
+          <circle cx="100" cy="100" r="78"/><circle cx="100" cy="100" r="60"/>
+          <g id="spk"><path d="M100 22 L106 44 L100 52 L94 44 Z" fill="url(#gg)"/></g>
+          <use href="#spk" transform="rotate(30 100 100)"/><use href="#spk" transform="rotate(60 100 100)"/>
+          <use href="#spk" transform="rotate(90 100 100)"/><use href="#spk" transform="rotate(120 100 100)"/>
+          <use href="#spk" transform="rotate(150 100 100)"/><use href="#spk" transform="rotate(180 100 100)"/>
+          <use href="#spk" transform="rotate(210 100 100)"/><use href="#spk" transform="rotate(240 100 100)"/>
+          <use href="#spk" transform="rotate(270 100 100)"/><use href="#spk" transform="rotate(300 100 100)"/>
+          <use href="#spk" transform="rotate(330 100 100)"/>
+        </g>
+        <g class="spin-r" fill="none" stroke="url(#gg)" stroke-width="1.4" opacity=".95">
+          <circle cx="100" cy="100" r="42" stroke-dasharray="5 7"/>
+          <path d="M100 66 Q118 84 100 100 Q82 84 100 66Z"/><path d="M100 134 Q118 116 100 100 Q82 116 100 134Z"/>
+          <path d="M66 100 Q84 118 100 100 Q84 82 66 100Z"/><path d="M134 100 Q116 118 100 100 Q116 82 134 100Z"/>
+        </g>
+        <circle cx="100" cy="100" r="9" fill="#FFF6DC"/>
+      </svg>
+      <p class="deva-title">वर्ण&nbsp;व्यूह</p>
+      <h1>Narayana's Cosmic Loom<span class="thin">VARNA-VYUHA</span></h1>
+      <div class="rule"></div>
+      <p class="tagline">Every colour the worlds have ever worn was spun on one loom. It has fallen still. Take up the shuttle.</p>
+      <div class="title-btns">
+        <button class="btn" id="btnBegin">Begin the weaving</button>
+        <button class="btn ghost" id="btnResume" hidden>Resume chapter <span id="resumeN"></span></button>
+        <button class="btn ghost" id="btnHelpTitle">How to weave</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HUD -->
+  <div id="hud" hidden>
+    <div class="scroll-wrap" id="scrollWrap">
+      <div class="scroll">
+        <div class="roll"></div>
+        <div class="sheet">
+          <div class="deva" id="objDeva">वर्ण व्यूह</div>
+          <h2 class="obj-title" id="objTitle">—</h2>
+          <p class="obj-text" id="objText">—</p>
+          <div class="chips" id="objChips"></div>
+        </div>
+        <div class="roll"></div>
+      </div>
+    </div>
+
+    <div class="plate plate-l">
+      <span class="ch-no" id="chNo">CHAPTER I</span>
+      <span class="ch-name" id="chName">The First Strands</span>
+    </div>
+
+    <div class="plate plate-r">
+      <span class="strands"><b id="strandN">0</b><span>STRANDS</span></span>
+      <button class="icbtn" id="btnUndo" title="Undo (Z)" aria-label="Undo last action">
+        <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a6 6 0 0 1 0 12h-3"/></svg>
+      </button>
+      <button class="icbtn" id="btnReset" title="Unweave the chapter" aria-label="Reset the board">
+        <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      </button>
+      <button class="icbtn" id="btnSound" title="Sound and music" aria-label="Toggle sound and music">
+        <svg viewBox="0 0 24 24" id="sndIcon"><path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 8.5a5 5 0 0 1 0 7" class="wave"/></svg>
+      </button>
+      <button class="icbtn" id="btnHelp" title="How to weave" aria-label="Help">
+        <svg viewBox="0 0 24 24"><path d="M9.2 9a3 3 0 1 1 4 2.8c-.8.3-1.2 1-1.2 1.9v.3"/><circle cx="12" cy="17.6" r=".6" fill="#FFE9B8"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Board -->
+  <div id="board" class="hidden">
+    <div class="loom loom-float" id="loom">
+      <div class="frame" aria-hidden="true">
+        <div class="pane"></div>
+        <svg class="corner c1" viewBox="0 0 60 60"><path d="M2 46V14a12 12 0 0 1 12-12h32"/><path d="M10 46V18a8 8 0 0 1 8-8h28"/><circle cx="14" cy="14" r="4"/><path d="M2 46q10 0 14-6"/></svg>
+        <svg class="corner c2" viewBox="0 0 60 60"><path d="M2 46V14a12 12 0 0 1 12-12h32"/><path d="M10 46V18a8 8 0 0 1 8-8h28"/><circle cx="14" cy="14" r="4"/><path d="M2 46q10 0 14-6"/></svg>
+        <svg class="corner c3" viewBox="0 0 60 60"><path d="M2 46V14a12 12 0 0 1 12-12h32"/><path d="M10 46V18a8 8 0 0 1 8-8h28"/><circle cx="14" cy="14" r="4"/><path d="M2 46q10 0 14-6"/></svg>
+        <svg class="corner c4" viewBox="0 0 60 60"><path d="M2 46V14a12 12 0 0 1 12-12h32"/><path d="M10 46V18a8 8 0 0 1 8-8h28"/><circle cx="14" cy="14" r="4"/><path d="M2 46q10 0 14-6"/></svg>
+        <svg class="finial top" viewBox="0 0 80 40"><path d="M6 36h68"/><path d="M40 4c8 8 14 12 22 14-8 2-14 6-22 14-8-8-14-12-22-14 8-2 14-6 22-14z"/><circle cx="40" cy="18" r="3.5"/></svg>
+        <svg class="finial bot" viewBox="0 0 80 40"><path d="M6 36h68"/><path d="M40 4c8 8 14 12 22 14-8 2-14 6-22 14-8-8-14-12-22-14 8-2 14-6 22-14z"/><circle cx="40" cy="18" r="3.5"/></svg>
+      </div>
+      <div class="grid" id="grid" role="grid" aria-label="The loom, six by six shuttles"></div>
+      <div class="fx" id="fx" style="inset:0"></div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </div>
+
+  <!-- Thread bank -->
+  <div id="bank" class="hidden" role="toolbar" aria-label="Thread bank"></div>
+  <div class="fx" id="bankFx"></div>
+
+  <!-- Dialogue -->
+  <div id="dlg">
+    <div class="dlg-in">
+      <div class="portrait" id="portrait"></div>
+      <div class="box">
+        <div class="nameplate"><span class="nm" id="spkName">Narayana</span><span class="ti" id="spkTitle"></span></div>
+        <p class="line" id="dlgLine"></p>
+        <div class="dlg-foot">
+          <span class="hintline">SPACE or click to continue</span>
+          <button class="btn btn-cont" id="btnCont">Continue <span class="arw">▾</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Burst + modal + toast + help -->
+  <div id="burst"><div class="flash"></div><div class="shock"></div><div class="shock s2"></div><div class="brays"></div><div class="bring"></div><div id="bmotes"></div></div>
+
+  <div id="modal">
+    <div class="card">
+      <div class="ribbon" id="rwRibbon">CHAPTER COMPLETE</div>
+      <svg class="emb" id="rwEmb" viewBox="0 0 120 120"></svg>
+      <h3 id="rwName">—</h3>
+      <div class="deva" id="rwDeva">—</div>
+      <div class="stars" id="rwStars"></div>
+      <p class="flav" id="rwFlav">—</p>
+      <div class="meta" id="rwMeta"></div>
+      <button class="btn" id="btnNext">Continue</button>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <div id="help">
+    <div class="help-card">
+      <h3>How to weave</h3>
+      <p>Pick a thread from the bank, then click a shuttle on the loom.</p>
+      <h4>Laying and stacking</h4>
+      <ul>
+        <li>An empty shuttle takes the pure pigment.</li>
+        <li>Lay a second pigment <em>on the same shuttle</em> and the two mix: crimson over turmeric gives orange.</li>
+        <li><em>Moonlight</em> lifts a colour a step paler. <em>Kajjala</em> sinks it a step darker.</li>
+        <li><em>Confluence</em> lets a shuttle bleed into the four beside it.</li>
+        <li><em>Unravel</em> empties a shuttle. It costs nothing but the strand is spent.</li>
+      </ul>
+      <h4>The wheel</h4>
+      <p>Twelve hues. Mixing two lands you at the hue between them — and mixing two that face each other across the wheel cancels both into grey.</p>
+      <svg class="wheel-fig" id="wheelFig" viewBox="0 0 240 240"></svg>
+      <h4>Music</h4>
+      <label class="vol"><span>Volume</span><input type="range" id="musVol" min="0" max="200" value="100" aria-label="Music volume"><output id="musVolOut">100%</output></label>
+      <h4>Keys</h4>
+      <p>1–7 pick a thread · arrows move · Enter lays · Z undoes · Space continues dialogue.</p>
+      <button class="btn close" id="btnHelpClose">Back to the loom</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   1. SMALL HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const rnd = (a, b) => a + Math.random() * (b - a);
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function hex2rgb(h){ h = h.replace('#',''); return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)]; }
+function rgb2hex(r){ return '#' + r.map(v => clamp(Math.round(v),0,255).toString(16).padStart(2,'0')).join(''); }
+function blend(a, b, t){ const A = hex2rgb(a), B = hex2rgb(b); return rgb2hex(A.map((v,i) => v + (B[i]-v)*t)); }
+function hexA(h, a){ const [r,g,b] = hex2rgb(h); return `rgba(${r},${g},${b},${a})`; }
+
+/* ═══════════════════════════════════════════════════════════════
+   2. THE COLOUR ENGINE — a twelve-step RYB wheel
+   A shuttle holds { h: hue 0-11 or null, s: saturation 0-3, l: value -2..+2 }
+   ═══════════════════════════════════════════════════════════════ */
+const HUES = [
+  { n:'crimson',    d:'रक्त',      c:'#D6423C' },
+  { n:'vermilion',  d:'सिन्दूर',   c:'#E4683A' },
+  { n:'orange',     d:'संध्या',    c:'#EE8B2E' },
+  { n:'amber',      d:'सुवर्ण',    c:'#F2AE2C' },
+  { n:'turmeric',   d:'हरिद्रा',   c:'#EFCE38' },
+  { n:'palasha',    d:'पलाश',      c:'#A6C63E' },
+  { n:'green',      d:'वन',        c:'#3FAF64' },
+  { n:'teal',       d:'तीर्थ',     c:'#22A5A2' },
+  { n:'indigo',     d:'नील',       c:'#3A77D8' },
+  { n:'sapphire',   d:'इन्द्रनील', c:'#5B58CB' },
+  { n:'violet',     d:'त्रिनेत्र', c:'#8C56CB' },
+  { n:'magenta',    d:'कुङ्कुम',   c:'#C44C9E' }
+];
+const NEUTRAL = '#8F8A96', TINT = '#FFF8E8', SHADE = '#241A2E';
+const dist = (a,b) => { const d = Math.abs(a-b) % 12; return Math.min(d, 12-d); };
+
+/* mixing two hues lands you on the hue between them; facing hues cancel */
+function mixHue(a, b){
+  const diff = ((b - a) % 12 + 12) % 12;
+  if (diff === 0) return a;
+  if (diff === 6) return null;                       // complements neutralise
+  const step = diff < 6 ? diff / 2 : (diff - 12) / 2;
+  return ((a + Math.round(step)) % 12 + 12) % 12;
+}
+function mixCell(cell, hue){
+  if (!cell) return { h:hue, s:3, l:0 };
+  if (cell.h === null){
+    return cell.l !== 0 ? { h:hue, s:3, l:cell.l }   // pigment into moonlight/kajjala
+                        : { h:hue, s:1, l:0 };       // pigment into cancelled grey
+  }
+  if (cell.h === hue) return { h:hue, s:Math.min(3, cell.s + 1), l:cell.l };
+  const d = dist(cell.h, hue), nh = mixHue(cell.h, hue);
+  if (nh === null) return { h:null, s:0, l:cell.l };
+  return { h:nh, s: d === 5 ? 1 : Math.max(2, cell.s), l:cell.l };
+}
+function colorOf(c){
+  if (!c) return null;
+  let base = c.h === null ? NEUTRAL : HUES[c.h].c;
+  if (c.h !== null && c.s < 3){
+    const g = hex2rgb(base), lum = (g[0]*.299 + g[1]*.587 + g[2]*.114);
+    base = blend(base, rgb2hex([lum*1.02, lum*.99, lum*1.05]), (3 - c.s) / 3 * .9);
+  }
+  if (c.l > 0) base = blend(base, TINT,  c.l === 1 ? .36 : .70);
+  if (c.l < 0) base = blend(base, SHADE, c.l === -1 ? .36 : .68);
+  return base;
+}
+function nameOf(c){
+  if (!c) return '';
+  const lv = { '-2':'deepest ', '-1':'shaded ', '0':'', '1':'soft ', '2':'pale ' }[String(c.l)];
+  if (c.h === null) return (lv + (c.l > 0 ? 'moonlight' : c.l < 0 ? 'kajjala' : 'ash')).trim();
+  const sv = c.s <= 1 ? 'muted ' : '';
+  return (lv + sv + HUES[c.h].n).trim();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. THREADS IN THE BANK
+   ═══════════════════════════════════════════════════════════════ */
+const TOOLS = [
+  { k:'R', kind:'pig',   hue:0, n:'Crimson',    d:'रक्त',     c:'#D6423C' },
+  { k:'Y', kind:'pig',   hue:4, n:'Turmeric',   d:'हरिद्रा',  c:'#EFCE38' },
+  { k:'B', kind:'pig',   hue:8, n:'Indigo',     d:'नील',      c:'#3A77D8' },
+  { k:'W', kind:'tint',        n:'Moonlight',  d:'चन्द्रिका', c:'#FFF8E8' },
+  { k:'K', kind:'shade',       n:'Kajjala',    d:'कज्जल',    c:'#2C2238' },
+  { k:'C', kind:'bleed',       n:'Confluence', d:'सङ्गम',     c:'#7FE3DE' },
+  { k:'X', kind:'erase',       n:'Unravel',    d:'विच्छेद',   c:'#CBD8E4' }
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   4. CHAPTERS — each one teaches a real idea about colour
+   ═══════════════════════════════════════════════════════════════ */
+const N4 = i => { const r = i/6|0, c = i%6, o = []; if(r>0)o.push(i-6); if(r<5)o.push(i+6); if(c>0)o.push(i-1); if(c<5)o.push(i+1); return o; };
+const lit = c => c && c.h !== null && c.s >= 2;
+
+function components(g, ok){
+  const seen = Array(36).fill(false), out = [];
+  for (let i = 0; i < 36; i++){
+    if (seen[i] || !ok(g[i], i)) continue;
+    const comp = [], st = [i]; seen[i] = true;
+    while (st.length){
+      const x = st.pop(); comp.push(x);
+      for (const nb of N4(x)) if (!seen[nb] && ok(g[nb], nb)){ seen[nb] = true; st.push(nb); }
+    }
+    out.push(comp);
+  }
+  return out;
+}
+function compPair(g){                       /* any adjacent complementary pair */
+  for (let i = 0; i < 36; i++){
+    if (!lit(g[i])) continue;
+    for (const nb of N4(i)) if (lit(g[nb]) && dist(g[i].h, g[nb].h) === 6) return [i, nb];
+  }
+  return null;
+}
+
+const CHAPTERS = [
+{
+  no:'I', name:'The First Strands', deva:'प्रथम सूत्र',
+  title:'Lay the three pigments',
+  text:'Put one pure strand of crimson, one of turmeric and one of indigo anywhere on the frame. Keep them on separate shuttles for now.',
+  reward:{ name:'Seed of Three Strands', deva:'त्रिसूत्र बीज', stars:3, hue:4,
+           flav:'The frame remembers what was laid on it first.' },
+  test(g){
+    const has = h => g.some(c => c && c.h === h && c.s === 3 && c.l === 0);
+    const chips = [[0,'Crimson'],[4,'Turmeric'],[8,'Indigo']].map(([h,t]) => ({ t, ok:has(h) }));
+    const marks = []; [0,4,8].forEach(h => { const i = g.findIndex(c => c && c.h === h && c.s === 3 && c.l === 0); if (i >= 0) marks.push(i); });
+    return { ok: chips.every(c => c.ok), chips, marks };
+  }
+},
+{
+  no:'II', name:'Dusk-fire', deva:'संध्या',
+  title:'Mix an orange, four times over',
+  text:'Lay turmeric on a shuttle, then lay crimson on the very same shuttle. The two become the orange of last light. Make four of them.',
+  reward:{ name:'Blessing of Sandhya', deva:'संध्या वरदान', stars:4, hue:2,
+           flav:'Somewhere below, a sky remembers how to end the day.' },
+  test(g){
+    const m = []; g.forEach((c,i) => { if (c && c.h === 2 && c.s >= 2) m.push(i); });
+    return { ok:m.length >= 4, chips:[{ t:`Orange shuttles ${Math.min(m.length,4)}/4`, ok:m.length >= 4 }], marks:m };
+  }
+},
+{
+  no:'III', name:'The Warm Run', deva:'उष्ण-क्रम',
+  title:'Weave an analogous warm harmony',
+  text:'Colours that sit side by side on the wheel agree with one another. Join four or more warm shuttles — crimson through turmeric — and let the run hold both orange and turmeric.',
+  reward:{ name:'Blessing of the Warm Run', deva:'उष्ण वरदान', stars:4, hue:3,
+           flav:'Harmony is not sameness. It is nearness.' },
+  test(g){
+    const comps = components(g, c => lit(c) && c.h <= 4);
+    let best = null;
+    for (const cp of comps){
+      const hs = new Set(cp.map(i => g[i].h));
+      const score = (cp.length >= 4) + hs.has(2) + hs.has(4);
+      if (!best || score > best.score) best = { cp, hs, score };
+    }
+    const size = best ? best.cp.length : 0, hs = best ? best.hs : new Set();
+    const chips = [
+      { t:`Connected warm run ${Math.min(size,4)}/4`, ok:size >= 4 },
+      { t:'Holds orange',   ok:hs.has(2) },
+      { t:'Holds turmeric', ok:hs.has(4) }
+    ];
+    return { ok: chips.every(c => c.ok), chips, marks: best ? best.cp : [] };
+  }
+},
+{
+  no:'IV', name:'Opposites', deva:'विरोध',
+  title:'Set a hue against its opposite',
+  text:'Two hues that face each other across the wheel make each other louder — violet against turmeric, green against crimson. Put such a pair on neighbouring shuttles.',
+  reward:{ name:'Blessing of the Facing Pair', deva:'विरोध वरदान', stars:5, hue:10,
+           flav:'They quarrel beautifully. Side by side they shout; stirred together they fall silent.' },
+  test(g){
+    const p = compPair(g);
+    return { ok:!!p, chips:[{ t:'A facing pair, side by side', ok:!!p }], marks:p || [] };
+  }
+},
+{
+  no:'V', name:'Ladder of Light', deva:'छाया-दीप्ति',
+  title:'Weave one hue at three depths',
+  text:'Take a single hue and join three shuttles of it: one sunk with kajjala, one left pure, one lifted with moonlight. That is how a flat colour learns to look solid.',
+  reward:{ name:'Ember of Jyoti', deva:'ज्योति स्फुलिङ्ग', stars:5, hue:8,
+           flav:'Shade, body, light. Everything the eye calls round is only this.' },
+  test(g){
+    let best = null;
+    for (let h = 0; h < 12; h++){
+      for (const cp of components(g, c => c && c.h === h && c.s >= 1)){
+        const L = new Set(cp.map(i => Math.sign(g[i].l)));
+        const score = (cp.length >= 3) + L.has(-1) + L.has(0) + L.has(1);
+        if (!best || score > best.score) best = { cp, L, score };
+      }
+    }
+    const L = best ? best.L : new Set(), size = best ? best.cp.length : 0;
+    const chips = [
+      { t:'Three joined, one hue', ok:size >= 3 },
+      { t:'Shaded', ok:L.has(-1) }, { t:'Pure', ok:L.has(0) }, { t:'Tinted', ok:L.has(1) }
+    ];
+    return { ok: chips.every(c => c.ok), chips, marks: best ? best.cp : [] };
+  }
+},
+{
+  no:'VI', name:'Varna-Vyuha', deva:'वर्ण-व्यूह',
+  title:'Set the whole figure turning',
+  text:'Three hues spaced evenly around the wheel, three shuttles of each. The four shuttles at the heart lifted with moonlight. And somewhere on the frame, one facing pair touching.',
+  reward:{ name:'Crown of the Varna-Vyuha', deva:'वर्ण-व्यूह मुकुट', stars:5, hue:6,
+           flav:'The loom turns. Below, the worlds take their colours back one at a time.' },
+  test(g){
+    const cnt = Array(12).fill(0);
+    g.forEach(c => { if (lit(c)) cnt[c.h]++; });
+    let triad = null;
+    for (let h = 0; h < 4 && !triad; h++)
+      if (cnt[h] >= 3 && cnt[h+4] >= 3 && cnt[h+8] >= 3) triad = [h, h+4, h+8];
+    const heart = [14,15,20,21], heartOK = heart.every(i => g[i] && g[i].l >= 1);
+    const p = compPair(g);
+    const marks = [];
+    if (triad) g.forEach((c,i) => { if (lit(c) && triad.includes(c.h)) marks.push(i); });
+    if (heartOK) marks.push(...heart);
+    if (p) marks.push(...p);
+    return {
+      ok: !!triad && heartOK && !!p,
+      chips:[{ t:'An even triad, three each', ok:!!triad },
+             { t:'The heart lifted', ok:heartOK },
+             { t:'A facing pair', ok:!!p }],
+      marks
+    };
+  }
+}];
+
+/* ═══════════════════════════════════════════════════════════════
+   5. THE SCRIPT
+   ═══════════════════════════════════════════════════════════════ */
+const NAR = { who:'narayana',    name:'Narayana',    title:'who sleeps on the endless serpent' };
+const CHI = { who:'chitralekha', name:'Chitralekha', title:'keeper of the loom' };
+const L = (s, t) => ({ ...s, t });
+
+const INTRO = [
+  L(NAR, 'You have come a long way, weaver. Past the milk-sea, past the seven winds, to the place where colour is made.'),
+  L(NAR, 'Beneath you hangs the Varna-Vyuha, the loom every hue is spun on. It has fallen still, and the worlds below have begun to forget.'),
+  L(NAR, 'Dawn no longer knows that it should be orange. The forests cannot recall green.'),
+  L(CHI, 'He will talk like that all morning if you let him. I am Chitralekha. I keep this loom, and I will teach you the shuttle.'),
+  L(CHI, 'Three pigments hang on the frame: crimson, turmeric, indigo. Moonlight lifts what you have laid down, kajjala sinks it. Lay one pigment over another and the two become a third thing.'),
+  L(NAR, 'Weave, and the worlds will remember.')
+];
+const PRE = [
+  [L(CHI, 'Gently, to begin. One pure strand of each pigment, on any three shuttles. Do not stack them yet — I want to see them whole.')],
+  [L(CHI, 'Now stack. Lay turmeric, then lay crimson on that same shuttle, and watch what happens between them.'),
+   L(CHI, 'Four orange shuttles is enough to wake the hour of dusk.')],
+  [L(CHI, 'Hues that sit beside each other on the wheel agree. Crimson, vermilion, orange, amber, turmeric — all one family, all warm.'),
+   L(CHI, 'Join four or more of them into a single run. It must carry orange and turmeric both.')],
+  [L(CHI, 'The opposite lesson now. Find two hues that face each other across the wheel and set them on neighbouring shuttles.'),
+   L(NAR, 'Keep them apart in the mixing, though. Stacked, opposites cancel, and you are left holding ash.')],
+  [L(CHI, 'One hue, three depths. Sink a shuttle with kajjala, leave one pure, lift one with moonlight — all touching, all the same hue.')],
+  [L(NAR, 'Now the whole figure, weaver. Everything you have been taught, at once.'),
+   L(CHI, 'Three hues evenly spaced round the wheel, three shuttles each. The four at the heart lifted pale. And one facing pair, touching, anywhere you like.')]
+];
+const POST = [
+  [L(NAR, 'Three seeds. The frame is listening again.')],
+  [L(NAR, 'Dusk has its colour back. Somewhere a sky is grateful.')],
+  [L(NAR, 'That is harmony — not sameness, but nearness.')],
+  [L(CHI, 'Loud, is it not? Neither one gives way.')],
+  [L(NAR, 'Shade, body and light on one colour. That is how a flat thing learns to look round.')],
+  [L(NAR, 'It turns. Look down — the worlds are taking their colours back, one at a time.'),
+   L(CHI, 'Not bad, for a first morning at the loom.'),
+   L(NAR, 'Stay, weaver. There is always more to spin.')]
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   6. PORTRAITS — drawn, not loaded
+   ═══════════════════════════════════════════════════════════════ */
+function portraitSVG(who){
+  const N = who === 'narayana';
+  const sk1 = N ? '#A9CBEE' : '#F3CDA2', sk2 = N ? '#6E94C6' : '#D8A273';
+  const hr1 = N ? '#1A2248' : '#3B2416', hr2 = N ? '#37417C' : '#6A4324';
+  const iris = N ? '#F0BE52' : '#3F9070';
+  const cl1 = N ? '#FBEBB8' : '#F6D9E2', cl2 = N ? '#C8992F' : '#C0819C';
+  const orn = '#F5D882';
+  return `
+<svg viewBox="0 0 320 470" role="img" aria-label="${N ? 'Narayana' : 'Chitralekha'}">
+ <defs>
+  <radialGradient id="ha${who}" cx=".5" cy=".38" r=".5">
+   <stop offset="0" stop-color="#FFF4D2" stop-opacity=".85"/><stop offset="1" stop-color="#FFE9B0" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="sk${who}" x1="0" y1="0" x2=".2" y2="1">
+   <stop offset="0" stop-color="${sk1}"/><stop offset="1" stop-color="${sk2}"/>
+  </linearGradient>
+  <linearGradient id="hr${who}" x1="0" y1="0" x2=".4" y2="1">
+   <stop offset="0" stop-color="${hr2}"/><stop offset="1" stop-color="${hr1}"/>
+  </linearGradient>
+  <linearGradient id="cl${who}" x1="0" y1="0" x2=".3" y2="1">
+   <stop offset="0" stop-color="${cl1}"/><stop offset="1" stop-color="${cl2}"/>
+  </linearGradient>
+  <linearGradient id="go${who}" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#FFF6DC"/><stop offset=".5" stop-color="#F0C96E"/><stop offset="1" stop-color="#B98A2C"/>
+  </linearGradient>
+  <radialGradient id="ir${who}" cx=".5" cy=".3" r=".8">
+   <stop offset="0" stop-color="#FFF6DC"/><stop offset=".45" stop-color="${iris}"/><stop offset="1" stop-color="#3A2408"/>
+  </radialGradient>
+ </defs>
+
+ <ellipse cx="160" cy="176" rx="150" ry="158" fill="url(#ha${who})"/>
+
+ <!-- hair behind -->
+ <path d="M160 34c-72 0-94 52-92 122 2 54-2 104-14 168h212c-12-64-16-114-14-168 2-70-20-122-92-122z" fill="url(#hr${who})"/>
+ ${N ? '' : '<path d="M232 190c22 54 18 130 6 180h34c4-70-6-140-40-180z" fill="url(#hr'+who+')"/>'}
+
+ <!-- shoulders -->
+ <path d="M160 322c-66 0-116 48-124 148h248c-8-100-58-148-124-148z" fill="url(#cl${who})"/>
+ <path d="M104 352c22 44 34 82 38 118M216 352c-22 44-34 82-38 118" fill="none" stroke="${orn}" stroke-width="5" opacity=".85"/>
+ <path d="M160 330c-18 0-32 10-34 24 12 10 22 14 34 14s22-4 34-14c-2-14-16-24-34-24z" fill="url(#go${who})"/>
+
+ <!-- neck -->
+ <path d="M131 228v46c0 16 58 16 58 0v-46z" fill="${sk2}"/>
+ <path d="M131 258c14 14 44 14 58 0v16c0 16-58 16-58 0z" fill="rgba(0,0,0,.14)"/>
+
+ <!-- face -->
+ <ellipse cx="86" cy="172" rx="11" ry="19" fill="url(#sk${who})"/>
+ <ellipse cx="234" cy="172" rx="11" ry="19" fill="url(#sk${who})"/>
+ <path d="M160 58c-51 0-73 41-73 91 0 57 27 111 73 115 46-4 73-58 73-115 0-50-22-91-73-91z" fill="url(#sk${who})"/>
+
+ <!-- brows -->
+ <path d="M110 142q22-12 44-1" fill="none" stroke="${hr1}" stroke-width="5.5" stroke-linecap="round" opacity=".92"/>
+ <path d="M210 142q-22-12-44-1" fill="none" stroke="${hr1}" stroke-width="5.5" stroke-linecap="round" opacity=".92"/>
+
+ <!-- eyes -->
+ <g>
+  <ellipse cx="128" cy="177" rx="23" ry="19" fill="#FFFDF6"/>
+  <circle cx="128" cy="178" r="14.5" fill="url(#ir${who})"/>
+  <circle cx="128" cy="178" r="6.5" fill="#1B1206"/>
+  <circle cx="122" cy="171" r="5.4" fill="#fff"/><circle cx="134" cy="186" r="2.6" fill="#fff" opacity=".85"/>
+  <path d="M104 170q24-22 48-6" fill="none" stroke="#1A1329" stroke-width="6" stroke-linecap="round"/>
+  <rect class="pf-lid" x="104" y="156" width="49" height="40" fill="url(#sk${who})"/>
+ </g>
+ <g>
+  <ellipse cx="192" cy="177" rx="23" ry="19" fill="#FFFDF6"/>
+  <circle cx="192" cy="178" r="14.5" fill="url(#ir${who})"/>
+  <circle cx="192" cy="178" r="6.5" fill="#1B1206"/>
+  <circle cx="186" cy="171" r="5.4" fill="#fff"/><circle cx="198" cy="186" r="2.6" fill="#fff" opacity=".85"/>
+  <path d="M216 170q-24-22-48-6" fill="none" stroke="#1A1329" stroke-width="6" stroke-linecap="round"/>
+  <rect class="pf-lid" x="167" y="156" width="49" height="40" fill="url(#sk${who})"/>
+ </g>
+
+ <!-- blush, nose, mouth -->
+ <ellipse cx="104" cy="203" rx="15" ry="7" fill="#E77A72" opacity=".22"/>
+ <ellipse cx="216" cy="203" rx="15" ry="7" fill="#E77A72" opacity=".22"/>
+ <path d="M160 194q7 8-3 11" fill="none" stroke="${sk2}" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+ <path d="M148 222q12 11 24 0" fill="none" stroke="#9E5A58" stroke-width="3.4" stroke-linecap="round"/>
+
+ <!-- front hair -->
+ <path d="M87 150c-2-58 28-92 73-92s75 34 73 92c-6-26-14-42-24-52-14 16-42 24-72 20-22-3-36-12-42-22-6 12-8 32-8 54z" fill="url(#hr${who})"/>
+ <path d="M104 96c14 22 40 32 74 28-24 16-56 14-74-28z" fill="${hr2}" opacity=".55"/>
+
+ ${N ? `
+ <!-- kirita crown + urdhva-pundra -->
+ <path d="M100 104c2-38 22-70 60-92 38 22 58 54 60 92-18-12-38-18-60-18s-42 6-60 18z" fill="url(#go${who})" stroke="#9A6E18" stroke-width="1.5"/>
+ <path d="M96 100h128l-6 22H102z" fill="url(#go${who})" stroke="#9A6E18" stroke-width="1.5"/>
+ <circle cx="160" cy="62" r="10" fill="#D6423C" stroke="#FFF0C6" stroke-width="2.5"/>
+ <circle cx="160" cy="16" r="6" fill="url(#go${who})"/>
+ <path d="M160 22v14" stroke="url(#go${who})" stroke-width="4"/>
+ <path d="M152 124l-6 40q14 12 28 0l-6-40z" fill="#FBF2DF" opacity=".95"/>
+ <path d="M160 126v38" stroke="#D6423C" stroke-width="4" stroke-linecap="round"/>
+ <path d="M82 186q-12 18-2 34 14-4 18-18z" fill="url(#go${who})"/>
+ <path d="M238 186q12 18 2 34-14-4-18-18z" fill="url(#go${who})"/>
+ ` : `
+ <!-- hairband, tikka, jasmine -->
+ <path d="M92 118q68-42 136 0" fill="none" stroke="url(#go${who})" stroke-width="7" stroke-linecap="round"/>
+ <path d="M160 112v22" stroke="url(#go${who})" stroke-width="3.5"/>
+ <circle cx="160" cy="140" r="9" fill="url(#go${who})" stroke="#9A6E18" stroke-width="1.2"/>
+ <circle cx="160" cy="140" r="3.5" fill="#D6423C"/>
+ <circle cx="160" cy="158" r="4.5" fill="#D6423C"/>
+ <g fill="#FFFBF0" opacity=".95">
+  <circle cx="96" cy="132" r="9"/><circle cx="84" cy="150" r="7.5"/><circle cx="92" cy="168" r="6.5"/>
+  <circle cx="96" cy="132" r="3" fill="#F2C94C"/><circle cx="84" cy="150" r="2.4" fill="#F2C94C"/>
+ </g>
+ <path d="M86 190q-10 16 0 30 12-6 14-18z" fill="url(#go${who})"/>
+ <path d="M234 190q10 16 0 30-12-6-14-18z" fill="url(#go${who})"/>
+ `}
+</svg>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. SOUND — synthesised, nothing loaded
+   ═══════════════════════════════════════════════════════════════ */
+const Snd = {
+  on: true, ctx: null, master: null,
+  boot(){
+    if (this.ctx){ if (this.ctx.state === 'suspended') this.ctx.resume(); }
+    else {
+      try {
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        this.master = this.ctx.createGain(); this.master.gain.value = 1.6;
+        const lim = this.ctx.createDynamicsCompressor();          // safety limiter: a loud bed plus effects can't clip
+        lim.threshold.value = -3; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = .002; lim.release.value = .2;
+        /* the last stage is a soft ceiling (tanh): quiet sounds pass untouched, and however much stacks up,
+           nothing can ever exceed full scale and clip */
+        const pre = this.ctx.createGain(); pre.gain.value = .5;
+        const sat = this.ctx.createWaveShaper(), curve = new Float32Array(4096);
+        for (let i = 0; i < 4096; i++) curve[i] = Math.tanh(2 * (i / 2047.5 - 1));
+        sat.curve = curve; sat.oversample = '2x';
+        this.master.connect(lim); lim.connect(pre); pre.connect(sat); sat.connect(this.ctx.destination);
+        this.sfx = this.ctx.createGain(); this.sfx.gain.value = 1.5;   // effects ride a little above the louder music bed
+        this.sfx.connect(this.master);
+      } catch(e){ this.ctx = null; }
+    }
+    if (this.ctx && this.on) Music.start();      // idempotent; the bed follows the sound switch
+  },
+  tone({ f = 440, t = 0, dur = .4, type = 'sine', vol = .1, to = null, glide = 0 }){
+    if (!this.on || !this.ctx) return;
+    const c = this.ctx, now = c.currentTime + t;
+    const o = c.createOscillator(), g = c.createGain(), lp = c.createBiquadFilter();
+    o.type = type; o.frequency.setValueAtTime(f, now);
+    if (to) o.frequency.exponentialRampToValueAtTime(to, now + (glide || dur));
+    lp.type = 'lowpass'; lp.frequency.value = 5200;
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(vol, now + Math.min(.03, dur / 4));
+    g.gain.exponentialRampToValueAtTime(.0001, now + dur);
+    o.connect(lp); lp.connect(g); g.connect(this.sfx);
+    o.start(now); o.stop(now + dur + .05);
+  },
+  noise({ t = 0, dur = .5, vol = .06, f = 1400, q = 1 }){
+    if (!this.on || !this.ctx) return;
+    const c = this.ctx, now = c.currentTime + t, n = Math.floor(c.sampleRate * dur);
+    const buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const s = c.createBufferSource(); s.buffer = buf;
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+    const g = c.createGain(); g.gain.value = vol;
+    s.connect(bp); bp.connect(g); g.connect(this.sfx); s.start(now);
+  },
+  blip(){ this.tone({ f: rnd(470, 690), dur: .045, type: 'triangle', vol: .06 }); },
+  lay(){ const sc = [523.25, 587.33, 659.25, 783.99, 880];
+         const f = sc[Math.floor(Math.random() * sc.length)];
+         this.tone({ f, dur: .55, type: 'sine', vol: .10 });
+         this.tone({ f: f * 2, dur: .3, type: 'triangle', vol: .03 });
+         this.noise({ dur: .12, vol: .03, f: 2600, q: .8 }); },
+  mixed(){ [0, .07, .14].forEach((t, i) => this.tone({ f: 523.25 * Math.pow(1.26, i), t, dur: .6, type: 'sine', vol: .085 }));
+           this.noise({ dur: .5, vol: .035, f: 3200, q: .6 }); },
+  bleed(){ this.tone({ f: 320, to: 880, glide: .4, dur: .5, type: 'sine', vol: .08 });
+           this.noise({ dur: .45, vol: .05, f: 1100, q: .5 }); },
+  deny(){ this.tone({ f: 174, dur: .16, type: 'triangle', vol: .07 }); },
+  /* a quill on paper: one stroke of band-passed noise, scratchy from a fast tremolo.
+     The dialogue fires one per few letters as the line is written. */
+  SCRIBBLE: .2,
+  scribble(flourish = false){
+    if (!this.on || !this.ctx) return;
+    const c = this.ctx, t = c.currentTime;
+    if (!this.paper){                                           // two seconds of noise, made once and reused
+      const n = c.sampleRate * 2, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+      this.paper = b;
+    }
+    const dur = flourish ? rnd(.13, .19) : rnd(.06, .11);
+    const src = c.createBufferSource(); src.buffer = this.paper;
+    const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1500;
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.3;
+    const f0 = rnd(2300, 4200);                                 // every stroke lands in a slightly different place
+    bp.frequency.setValueAtTime(f0, t);
+    bp.frequency.linearRampToValueAtTime(Math.random() < .5 ? f0 * 1.35 : f0 * .72, t + dur);   // up- or down-stroke
+    const am = c.createGain(); am.gain.value = .55;             // tremolo = the grain of nib on paper
+    const lfo = c.createOscillator(); lfo.type = 'sawtooth'; lfo.frequency.value = rnd(48, 95);
+    const depth = c.createGain(); depth.gain.value = .45;
+    lfo.connect(depth); depth.connect(am.gain);
+    const g = c.createGain(), vol = (flourish ? 1.25 : 1) * this.SCRIBBLE * rnd(.8, 1.15);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t + .012);
+    g.gain.setValueAtTime(vol * .85, t + dur * .6);
+    g.gain.linearRampToValueAtTime(0, t + dur);
+    src.connect(hp); hp.connect(bp); bp.connect(am); am.connect(g); g.connect(this.sfx);
+    src.start(t, rnd(0, 1.7), dur + .02); lfo.start(t); lfo.stop(t + dur + .02);
+  },
+  chime(){ this.tone({ f: 587.33, dur: 1.3, type: 'sine', vol: .09 });
+           this.tone({ f: 880, t: .16, dur: 1.5, type: 'sine', vol: .07 });
+           this.tone({ f: 1174.66, t: .16, dur: .9, type: 'triangle', vol: .02 }); },
+  win(){ Music.duck(.38, 2.8);
+         [0, 1, 2, 3, 4].forEach(i => {
+           [293.66, 369.99, 440, 587.33, 739.99][i] &&
+           this.tone({ f: [293.66, 369.99, 440, 587.33, 739.99][i], t: i * .11, dur: 2.2, type: 'sine', vol: .10 }); });
+         this.noise({ t: .05, dur: 1.6, vol: .05, f: 4200, q: .4 });
+         this.tone({ t: .5, f: 146.83, dur: 2.4, type: 'triangle', vol: .06 }); }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   7b. MUSIC — a tanpura, a slow pad bed and the odd bell.
+   All oscillators, nothing loaded. The tonic is D, the same D the
+   completion chord rings on, so the two always agree.
+   ═══════════════════════════════════════════════════════════════ */
+const Music = {
+  LEVEL: .8,                                    // overall bed level; the bus compressor + master limiter keep this from clipping
+  vol: 1,                                       // the player's own music-volume slider (0 – 2)
+  SA: 146.83,                                   // D3
+  TAN: [[-5, 1.55], [0, 1.35], [0, 1.35], [-12, 2.05]],          // Pa, Sa, Sa, low Sa · [semitones, gap to next pluck]
+  CHORDS: [[7,14,16,19], [5,9,12,16], [9,12,16,19], [7,12,14,19]], // Dmaj9 · Gmaj7 · Bm7 · Asus, over the drone
+  BELLS: [12,14,16,19,21,24,26,28],             // D major pentatonic, two octaves up
+  CHORD_LEN: 13,                                // seconds per chord; a full loop is 52 s
+  ctx: null, built: false, running: false, timer: null, cleanup: null,
+  voices: new Set(),
+  tTan: 0, tPad: 0, tBell: 0, tanStep: 0, padIdx: 0,
+
+  hz(st){ return this.SA * Math.pow(2, st / 12); },
+
+  /* a reverb tail made from decaying noise, darker as it fades */
+  impulse(c){
+    const sr = c.sampleRate, n = Math.floor(sr * 4.2), b = c.createBuffer(2, n, sr);
+    for (let ch = 0; ch < 2; ch++){
+      const d = b.getChannelData(ch); let y = 0;
+      for (let i = 0; i < n; i++){
+        const p = i / n, k = .55 * (1 - p) + .06;
+        y += ((Math.random() * 2 - 1) - y) * k;
+        d[i] = y * Math.pow(1 - p, 2.8) * Math.min(1, i / (sr * .012));
+      }
+    }
+    return b;
+  },
+
+  /* the persistent graph: voices → dry/reverb → duck → fade → lowpass → the SFX master */
+  build(){
+    const c = this.ctx = Snd.ctx;
+    this.dry = c.createGain(); this.dry.gain.value = .8;
+    this.verb = c.createConvolver(); this.verb.buffer = this.impulse(c);
+    this.wet = c.createGain(); this.wet.gain.value = .9;
+    this.duckG = c.createGain();
+    this.fade = c.createGain(); this.fade.gain.value = 0;
+    this.lp = c.createBiquadFilter(); this.lp.type = 'lowpass'; this.lp.frequency.value = 4200; this.lp.Q.value = .4;
+    this.dry.connect(this.duckG);
+    this.verb.connect(this.wet); this.wet.connect(this.duckG);
+    this.comp = c.createDynamicsCompressor();
+    this.comp.threshold.value = -20; this.comp.knee.value = 22; this.comp.ratio.value = 3.4;
+    this.comp.attack.value = .018; this.comp.release.value = .28;
+    this.duckG.connect(this.fade); this.fade.connect(this.lp); this.lp.connect(this.comp); this.comp.connect(Snd.master);
+
+    /* the pads share a bus that breathes very slowly */
+    this.padBus = c.createGain(); this.padBus.gain.value = .75;
+    const lfo = c.createOscillator(), depth = c.createGain();
+    lfo.frequency.value = .09; depth.gain.value = .22;
+    lfo.connect(depth); depth.connect(this.padBus.gain); lfo.start();
+    this.out(this.padBus, 1, .55);
+    this.built = true;
+  },
+
+  out(node, dry = 1, send = .3){
+    const c = this.ctx;
+    if (dry === 1) node.connect(this.dry);
+    else { const d = c.createGain(); d.gain.value = dry; node.connect(d); d.connect(this.dry); }
+    if (send > 0){ const s = c.createGain(); s.gain.value = send; node.connect(s); s.connect(this.verb); }
+  },
+
+  osc(type, f, t0, t1, detune = 0){
+    const o = this.ctx.createOscillator();
+    o.type = type; o.frequency.value = f; o.detune.value = detune;
+    o.start(t0); o.stop(t1);
+    this.voices.add(o); o.onended = () => this.voices.delete(o);
+    return o;
+  },
+
+  /* one tanpura string: a buzzing saw whose filter blooms open, then closes as it rings out */
+  pluck(t, f, vol, dur){
+    const c = this.ctx, g = c.createGain(), lp = c.createBiquadFilter();
+    const lo = Math.max(f * 2.6, 380), hi = Math.max(f * 8, 1100);
+    lp.type = 'lowpass'; lp.Q.value = 1.1;
+    lp.frequency.setValueAtTime(lo, t);
+    lp.frequency.exponentialRampToValueAtTime(hi, t + 1.3);
+    lp.frequency.exponentialRampToValueAtTime(lo * .8, t + dur);
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.linearRampToValueAtTime(vol, t + .03);
+    g.gain.exponentialRampToValueAtTime(vol * .5, t + .9);
+    g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    const end = t + dur + .1;
+    this.osc('sawtooth', f, t, end, -5).connect(lp);
+    this.osc('sawtooth', f, t, end,  5).connect(lp);
+    this.osc('sine',     f, t, end,  0).connect(lp);
+    lp.connect(g); this.out(g, 1, .4);
+  },
+
+  /* one pad note: a sine and a triangle, slightly apart, swelling in over 4.5 s */
+  padNote(t, st, len){
+    const c = this.ctx, f = this.hz(st), g = c.createGain(), lp = c.createBiquadFilter();
+    const peak = .034, rel = 5.5, end = t + len + rel + .2;
+    lp.type = 'lowpass'; lp.frequency.value = 2600; lp.Q.value = .3;
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + 4.5);
+    g.gain.setValueAtTime(peak, t + len);
+    g.gain.exponentialRampToValueAtTime(.0001, t + len + rel);
+    this.osc('sine',     f, t, end, -6).connect(lp);
+    this.osc('triangle', f, t, end,  6).connect(lp);
+    lp.connect(g); g.connect(this.padBus);
+  },
+  chord(t){
+    const notes = this.CHORDS[this.padIdx % this.CHORDS.length]; this.padIdx++;
+    notes.forEach((st, i) => this.padNote(t + i * .35, st, this.CHORD_LEN));
+  },
+
+  /* a soft bell, mostly reverb; now and then a small falling figure */
+  bellNote(t, st){
+    const c = this.ctx, f = this.hz(st), g = c.createGain(), p = c.createGain();
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.linearRampToValueAtTime(.065, t + .008);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 4.6);
+    p.gain.value = .22;
+    this.osc('sine', f,        t, t + 4.7).connect(g);
+    this.osc('sine', f * 2.76, t, t + 4.7).connect(p); p.connect(g);
+    this.out(g, .45, .9);
+  },
+  bell(t){
+    const i = Math.floor(Math.random() * this.BELLS.length), n = Math.random() < .35 ? 3 : 1;
+    for (let k = 0; k < n; k++) this.bellNote(t + k * .55, this.BELLS[Math.max(0, i - k)]);
+  },
+
+  /* look-ahead scheduler: keeps roughly two seconds of music queued */
+  tick(now = this.ctx.currentTime){
+    if (!this.running) return;
+    const ahead = now + 1.8;
+    while (this.tTan < ahead){
+      const [st, gap] = this.TAN[this.tanStep % 4];
+      this.pluck(this.tTan + Math.random() * .03, this.hz(st), st === -12 ? .095 : .085, 7.5);
+      this.tTan += gap; this.tanStep++;
+    }
+    while (this.tPad < ahead){ this.chord(this.tPad); this.tPad += this.CHORD_LEN; }
+    while (this.tBell < ahead){ this.bell(this.tBell); this.tBell += rnd(8, 16); }
+  },
+
+  start(){
+    if (!Snd.ctx || !Snd.on || this.running) return;
+    if (!this.built) this.build();
+    if (this.cleanup){ clearTimeout(this.cleanup); this.cleanup = null; }
+    const now = this.ctx.currentTime, g = this.fade.gain;
+    g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.setTargetAtTime(this.LEVEL * this.vol, now, 1.7);
+    this.running = true;
+    this.ctx.onstatechange = () => this.sync();
+    this.sync();
+    this.tTan = this.tPad = now + .5; this.tBell = now + 7; this.tanStep = 0; this.padIdx = 0;
+    this.tick();
+    this.timer = setInterval(() => this.tick(), 250);
+  },
+
+  /* the sound button glows while the audio engine is really running, so silence has a diagnosis */
+  sync(){ const b = document.getElementById('btnSound'); if (b) b.classList.toggle('live', this.running && this.ctx && this.ctx.state === 'running'); },
+
+  /* the slider: glide to the new level so dragging never clicks */
+  setVol(v){
+    this.vol = v;
+    if (!this.built || !this.running) return;
+    const now = this.ctx.currentTime, g = this.fade.gain;
+    g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.setTargetAtTime(this.LEVEL * v, now, .12);
+  },
+
+  /* fade over about two seconds, then silence whatever is still queued */
+  stop(){
+    if (!this.built || !this.running) return;
+    this.running = false; clearInterval(this.timer); this.timer = null; this.sync();
+    const now = this.ctx.currentTime, g = this.fade.gain;
+    g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.setTargetAtTime(0, now, .45);
+    this.cleanup = setTimeout(() => this.kill(), 3000);
+  },
+  kill(){
+    this.cleanup = null;
+    this.voices.forEach(o => { try { o.stop(); } catch(e){} });
+    this.voices.clear();
+  },
+
+  /* dip the bed under a big moment, then let it back up */
+  duck(depth = .4, hold = 2.6){
+    if (!this.built) return;
+    const t = this.ctx.currentTime, g = this.duckG.gain;
+    g.cancelScheduledValues(t); g.setValueAtTime(g.value, t);
+    g.linearRampToValueAtTime(depth, t + .1);
+    g.setValueAtTime(depth, t + .6);
+    g.linearRampToValueAtTime(1, t + .6 + hold);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   8. STATE
+   ═══════════════════════════════════════════════════════════════ */
+const S = {
+  ch: 0, grid: Array(36).fill(null), tool: 'R', strands: 0,
+  hist: [], phase: 'title', cursor: 0, done: false, finale: false
+};
+const cells = [];
+const save = () => { try { localStorage.setItem('vv.reached', String(S.ch)); localStorage.setItem('vv.snd', Snd.on ? '1' : '0'); localStorage.setItem('vv.vol', String(Math.round(Music.vol * 100))); } catch(e){} };
+const load = () => { try { return { reached: +(localStorage.getItem('vv.reached') || 0), snd: localStorage.getItem('vv.snd') !== '0', vol: clamp(+(localStorage.getItem('vv.vol') || 100), 0, 200) / 100 }; } catch(e){ return { reached: 0, snd: true, vol: 1 }; } };
+
+/* ═══════════════════════════════════════════════════════════════
+   9. SKY FURNITURE
+   ═══════════════════════════════════════════════════════════════ */
+function temple(scale){
+  return `<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax meet">
+    <g fill="#FFFDF4" opacity=".92">
+      <path d="M100 4l7 13-5 2 9 15-6 2 11 17-7 2 13 19H78l13-19-7-2 11-17-6-2 9-15-5-2z"/>
+      <path d="M58 40l5 9-4 1 7 11-5 1 9 13H46l9-13-5-1 7-11-4-1z" opacity=".9"/>
+      <path d="M142 40l5 9-4 1 7 11-5 1 9 13h-24l9-13-5-1 7-11-4-1z" opacity=".9"/>
+      <path d="M40 74h120l8 12H32z"/><path d="M26 86h148l9 13H17z"/>
+      <path d="M12 99h176l6 9H6z" opacity=".8"/>
+    </g>
+    <g fill="#F2C97A" opacity=".75">
+      <circle cx="100" cy="6" r="4"/><circle cx="58" cy="41" r="3"/><circle cx="142" cy="41" r="3"/>
+    </g></svg>`;
+}
+function buildSky(){
+  const isles = $('#isles');
+  [['i1'],['i2'],['i3'],['i4']].forEach(([cl]) => {
+    const d = document.createElement('div'); d.className = 'isle ' + cl; d.innerHTML = temple(); isles.appendChild(d);
+  });
+  const m = $('#motes'), n = REDUCED ? 0 : 26;
+  for (let i = 0; i < n; i++){
+    const e = document.createElement('div'); e.className = 'mote';
+    const sz = rnd(2, 6);
+    e.style.cssText = `width:${sz}px;height:${sz}px;left:${rnd(0,100)}%;top:${rnd(45,100)}%;--o:${rnd(.25,.8)};--dx:${rnd(-60,60)}px;animation-duration:${rnd(16,38)}s;animation-delay:-${rnd(0,30)}s`;
+    m.appendChild(e);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   10. BOARD
+   ═══════════════════════════════════════════════════════════════ */
+function buildGrid(){
+  const g = $('#grid');
+  for (let i = 0; i < 36; i++){
+    const b = document.createElement('button');
+    b.className = 'cell'; b.dataset.i = i; b.setAttribute('role', 'gridcell');
+    b.tabIndex = i === 0 ? 0 : -1;
+    b.innerHTML = '<span class="thread"></span>';
+    b.addEventListener('click', () => { S.cursor = i; apply(i); });
+    b.addEventListener('pointerenter', () => showRead(i));
+    b.addEventListener('focus', () => { S.cursor = i; showRead(i); });
+    b.addEventListener('pointerleave', () => $('#readout').classList.remove('on'));
+    g.appendChild(b); cells.push(b);
+  }
+}
+function showRead(i){
+  const r = $('#readout'), c = S.grid[i];
+  r.textContent = c ? nameOf(c).toUpperCase() : '';
+  r.classList.toggle('on', !!c);
+}
+function paint(i, morph){
+  const t = cells[i].querySelector('.thread'), c = S.grid[i];
+  const r = (i / 6 | 0) + 1, col = (i % 6) + 1;
+  if (!c){
+    t.classList.remove('on'); t.style.backgroundColor = 'transparent'; t.style.boxShadow = 'none';
+    cells[i].setAttribute('aria-label', `Row ${r} column ${col}, empty`);
+    return;
+  }
+  const hex = colorOf(c);
+  t.style.backgroundColor = hex;
+  t.style.boxShadow = `0 0 18px ${hexA(hex, .55)}, 0 3px 10px rgba(6,22,42,.34)`;
+  t.classList.add('on');
+  cells[i].setAttribute('aria-label', `Row ${r} column ${col}, ${nameOf(c)}`);
+  if (morph && !REDUCED){ t.classList.remove('morph'); void t.offsetWidth; t.classList.add('morph'); }
+}
+function repaint(){ for (let i = 0; i < 36; i++) paint(i); }
+
+/* effects */
+function fxAt(i, kind){
+  if (REDUCED) return;
+  const host = $('#fx'), r = cells[i].getBoundingClientRect(), h = host.getBoundingClientRect();
+  const x = r.left - h.left + r.width / 2, y = r.top - h.top + r.height / 2;
+  const rip = document.createElement('span');
+  rip.className = 'ripple';
+  rip.style.cssText = `left:${x - r.width/2}px;top:${y - r.width/2}px;width:${r.width}px;height:${r.width}px`;
+  host.appendChild(rip); setTimeout(() => rip.remove(), 900);
+  const col = colorOf(S.grid[i]) || '#FFEFC8', n = kind === 'mix' ? 16 : 9;
+  for (let k = 0; k < n; k++){
+    const s = document.createElement('span'), a = rnd(0, Math.PI * 2), d = rnd(20, 62), sz = rnd(3, 7);
+    s.className = 'spark';
+    s.style.cssText = `left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;background:radial-gradient(circle,#FFF8E2,${col});
+      --tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d - 12}px;animation-delay:${rnd(0,.12)}s`;
+    host.appendChild(s); setTimeout(() => s.remove(), 1100);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   11. PLAYING
+   ═══════════════════════════════════════════════════════════════ */
+function pushHist(){ S.hist.push({ g: JSON.stringify(S.grid), s: S.strands }); if (S.hist.length > 60) S.hist.shift(); }
+function deny(i, msg){ if (i != null){ cells[i].classList.remove('deny'); void cells[i].offsetWidth; cells[i].classList.add('deny'); } Snd.deny(); toast(msg); }
+
+function apply(i){
+  if (S.phase !== 'play') return;
+  Snd.boot();
+  const T = TOOLS.find(t => t.k === S.tool), c = S.grid[i];
+
+  if (T.kind === 'erase'){
+    if (!c) return deny(i, 'That shuttle is already bare.');
+    pushHist(); S.grid[i] = null; paint(i); Snd.deny(); fxAt(i, 'lay'); after(); return;
+  }
+  if (T.kind === 'bleed'){
+    if (!c) return deny(i, 'Confluence needs a colour to spill. Lay a thread first.');
+    const nb = N4(i);
+    pushHist(); S.strands++;
+    nb.forEach((x, k) => setTimeout(() => {
+      const tgt = S.grid[x];
+      let out;
+      if (c.h === null){                                   /* moonlight, kajjala or ash spills value */
+        out = tgt ? { ...tgt, l: clamp(tgt.l + Math.sign(c.l), -2, 2) } : { h:null, s:0, l:c.l };
+      } else if (!tgt){                                    /* bleeds into bare shuttles, a shade weaker */
+        out = { h:c.h, s:Math.max(1, c.s - 1), l:c.l };
+      } else {
+        out = mixCell(tgt, c.h);
+      }
+      S.grid[x] = out; paint(x, true); fxAt(x, 'mix');
+    }, 90 * k));
+    Snd.bleed(); fxAt(i, 'mix');
+    setTimeout(after, 90 * nb.length + 40); return;
+  }
+  if (T.kind === 'tint' || T.kind === 'shade'){
+    const dir = T.kind === 'tint' ? 1 : -1;
+    if (!c){ pushHist(); S.strands++; S.grid[i] = { h: null, s: 0, l: dir * 2 }; }
+    else {
+      if ((dir > 0 && c.l >= 2) || (dir < 0 && c.l <= -2))
+        return deny(i, dir > 0 ? 'No more moonlight will hold on that shuttle.' : 'That shuttle is already as deep as kajjala goes.');
+      pushHist(); S.strands++; S.grid[i] = { ...c, l: clamp(c.l + dir, -2, 2) };
+    }
+    paint(i, true); Snd.lay(); fxAt(i, 'lay'); after(); return;
+  }
+  /* pigment */
+  pushHist(); S.strands++;
+  const mixing = !!c;
+  S.grid[i] = mixCell(c, T.hue);
+  paint(i, true);
+  mixing ? Snd.mixed() : Snd.lay();
+  fxAt(i, mixing ? 'mix' : 'lay');
+  after();
+}
+function after(){ $('#strandN').textContent = S.strands; showRead(S.cursor); evaluate(false); }
+
+function evaluate(loud){
+  const res = CHAPTERS[S.ch].test(S.grid);
+  const chips = $('#objChips'); chips.innerHTML = '';
+  res.chips.forEach(c => {
+    const e = document.createElement('span');
+    e.className = 'chip' + (c.ok ? ' on' : ''); e.innerHTML = `<i></i>${c.t}`;
+    chips.appendChild(e);
+  });
+  cells.forEach(c => c.classList.remove('mark'));
+  new Set(res.marks).forEach(i => cells[i] && cells[i].classList.add('mark'));
+  if (loud){
+    if (res.ok) win();
+    else {
+      const missing = res.chips.filter(c => !c.ok);
+      $('#scrollWrap').classList.remove('shake'); void $('#scrollWrap').offsetWidth; $('#scrollWrap').classList.add('shake');
+      Snd.deny();
+      toast('Not yet — ' + missing.map(m => m.t.toLowerCase()).join(', ') + '.');
+    }
+  }
+  return res.ok;
+}
+
+let toastT;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 3400);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   12. DIALOGUE
+   ═══════════════════════════════════════════════════════════════ */
+const D = { q: [], i: 0, typing: false, timer: null, after: null, shown: '' };
+function say(lines, done){
+  D.q = lines; D.i = 0; D.after = done; S.phase = 'dialogue';
+  $('#dlg').classList.add('on'); line();
+}
+function line(){
+  const l = D.q[D.i];
+  const pf = $('#portrait');
+  if (pf.dataset.who !== l.who){
+    pf.classList.add('swap');
+    setTimeout(() => { pf.innerHTML = portraitSVG(l.who); pf.dataset.who = l.who; pf.classList.remove('swap'); }, 180);
+  }
+  $('#spkName').textContent = l.name;
+  $('#spkTitle').textContent = l.title;
+  type(l.t);
+}
+function type(txt){
+  const el = $('#dlgLine');
+  D.typing = true; D.shown = txt; let i = 0;
+  el.innerHTML = '<span class="cur"></span>';
+  clearInterval(D.timer); D.timer = null;
+  if (REDUCED){ el.textContent = txt; D.typing = false; return; }
+  D.timer = setInterval(() => {
+    i++;
+    el.innerHTML = txt.slice(0, i).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '<span class="cur"></span>';
+    const ch = txt[i-1];
+    if (ch && ch !== ' '){                                  // the pen lifts at spaces, drags through letters
+      if (/[.,;:!?—]/.test(ch)) Snd.scribble(true);         // a longer flourish at punctuation
+      else if (i % 3 === 0) Snd.scribble();
+    }
+    if (i >= txt.length){ clearInterval(D.timer); D.timer = null; D.typing = false; el.textContent = txt; }
+  }, 22);
+}
+function advance(){
+  Snd.boot();
+  if (D.typing){ clearInterval(D.timer); D.timer = null; $('#dlgLine').textContent = D.shown; D.typing = false; return; }
+  D.i++;
+  if (D.i < D.q.length){ line(); return; }
+  $('#dlg').classList.remove('on');
+  const f = D.after; D.after = null;
+  setTimeout(() => f && f(), 420);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   13. CHAPTER FLOW
+   ═══════════════════════════════════════════════════════════════ */
+function startChapter(n){
+  S.ch = n; S.grid = Array(36).fill(null); S.strands = 0; S.hist = []; S.done = false;
+  const c = CHAPTERS[n];
+  $('#chNo').textContent = 'CHAPTER ' + c.no;
+  $('#chName').textContent = c.name;
+  $('#objDeva').textContent = c.deva;
+  $('#objTitle').textContent = c.title;
+  $('#objText').textContent = c.text;
+  $('#strandN').textContent = '0';
+  $('#hud').hidden = false;
+  repaint(); evaluate(false);
+  S.phase = 'play';
+  $('#board').classList.remove('hidden');
+  $('#bank').classList.remove('hidden');
+  save();
+  if (n === 0) setTimeout(() => toast('Pick a thread below, then click a shuttle on the loom.'), 900);
+}
+function enterChapter(n){ say(PRE[n], () => startChapter(n)); }
+
+function win(){
+  if (S.done) return;
+  S.done = true; S.phase = 'won';
+  Snd.win(); burst();
+  cells.forEach((c, i) => { if (S.grid[i]) setTimeout(() => paint(i, true), 240 + i * 22); });
+  setTimeout(reward, 1350);
+}
+function burst(){
+  const b = $('#burst'); b.className = 'go';
+  const host = $('#bmotes'); host.innerHTML = '';
+  if (!REDUCED){
+    for (let k = 0; k < 54; k++){
+      const s = document.createElement('span'), a = rnd(0, Math.PI * 2), d = rnd(120, 620), sz = rnd(4, 11);
+      s.className = 'bmote';
+      s.style.cssText = `left:50%;top:46%;width:${sz}px;height:${sz}px;
+        background:radial-gradient(circle,#FFFDF0,${['#FFE9A8','#FFD27A','#FFF3CE'][k%3]});
+        --tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d}px;animation-delay:${rnd(0,.25)}s`;
+      host.appendChild(s);
+    }
+  }
+  setTimeout(() => { b.className = ''; host.innerHTML = ''; }, 2200);
+}
+function emblem(hue){
+  const c = HUES[hue].c, c2 = blend(c, '#FFF3D0', .55);
+  let p = '';
+  for (let k = 0; k < 8; k++) p += `<path d="M60 14 Q72 40 60 60 Q48 40 60 14Z" transform="rotate(${k*45} 60 60)" fill="${k%2?c2:c}" opacity="${k%2?.75:.95}"/>`;
+  return `<g class="spin">${p}</g>
+   <circle cx="60" cy="60" r="54" fill="none" stroke="#E7B44C" stroke-width="2"/>
+   <circle cx="60" cy="60" r="46" fill="none" stroke="#E7B44C" stroke-width="1" stroke-dasharray="4 6"/>
+   <circle cx="60" cy="60" r="13" fill="#FFF6DC" stroke="#C08F36" stroke-width="2"/>`;
+}
+function reward(){
+  const r = CHAPTERS[S.ch].reward;
+  $('#rwRibbon').textContent = 'CHAPTER ' + CHAPTERS[S.ch].no + ' COMPLETE';
+  $('#rwEmb').innerHTML = emblem(r.hue);
+  $('#rwName').textContent = r.name;
+  $('#rwDeva').textContent = r.deva;
+  $('#rwFlav').textContent = r.flav;
+  $('#rwMeta').textContent = `WOVEN IN ${S.strands} STRAND${S.strands === 1 ? '' : 'S'}`;
+  const st = $('#rwStars'); st.innerHTML = '';
+  for (let k = 0; k < r.stars; k++){
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 24 24');
+    s.innerHTML = '<path d="M12 2l3 7h7l-5.6 4.4L18.5 21 12 16.8 5.5 21l2.1-7.6L2 9h7z"/>';
+    s.style.animationDelay = (.15 + k * .11) + 's';
+    st.appendChild(s);
+  }
+  $('#btnNext').textContent = S.ch === CHAPTERS.length - 1 ? 'The last thread' : 'Continue';
+  $('#modal').classList.add('on');
+  $('#btnNext').focus();
+}
+function nextStep(){
+  $('#modal').classList.remove('on');
+  $('#board').classList.add('hidden');
+  $('#bank').classList.add('hidden');
+  const n = S.ch;
+  say(POST[n], () => {
+    if (n + 1 < CHAPTERS.length){ S.ch = n + 1; save(); enterChapter(n + 1); }
+    else finale();
+  });
+}
+function finale(){
+  S.finale = true;
+  $('#rwRibbon').textContent = 'THE LOOM TURNS';
+  $('#rwEmb').innerHTML = emblem(4);
+  $('#rwName').textContent = 'Varna-Vyuha Restored';
+  $('#rwDeva').textContent = 'वर्ण-व्यूह पुनः';
+  $('#rwFlav').textContent = 'Six chapters woven. Dawn is orange again, and the forests have remembered green.';
+  $('#rwMeta').textContent = 'THANK YOU FOR WEAVING';
+  $('#rwStars').innerHTML = '';
+  $('#btnNext').textContent = 'Weave again';
+  $('#modal').classList.add('on');
+  burst();
+  try { localStorage.setItem('vv.reached', '0'); } catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   14. THREAD BANK
+   ═══════════════════════════════════════════════════════════════ */
+function buildBank(){
+  const bank = $('#bank');
+  TOOLS.forEach((t, n) => {
+    const b = document.createElement('button');
+    b.className = 'spool' + (t.k === S.tool ? ' sel' : '');
+    b.dataset.k = t.k; b.title = `${t.n} (${n + 1})`;
+    b.setAttribute('aria-label', t.n);
+    const c2 = blend(t.c, '#000000', .28), c3 = blend(t.c, '#FFFFFF', .4);
+    let inner;
+    if (t.kind === 'erase'){
+      inner = `<circle cx="30" cy="30" r="22" fill="rgba(255,255,255,.10)"/>
+        <path d="M20 20l20 20M40 20L20 40" stroke="#D8E6F2" stroke-width="3.6" stroke-linecap="round"/>`;
+    } else if (t.kind === 'bleed'){
+      inner = `<circle cx="30" cy="30" r="22" fill="rgba(127,227,222,.18)"/>
+        <circle cx="30" cy="30" r="7" fill="${t.c}"/>
+        <circle cx="30" cy="30" r="13" fill="none" stroke="${t.c}" stroke-width="2" opacity=".8"/>
+        <circle cx="30" cy="30" r="19" fill="none" stroke="${t.c}" stroke-width="1.4" opacity=".5"/>`;
+    } else {
+      inner = `<defs><radialGradient id="sp${t.k}" cx=".35" cy=".3" r=".8">
+          <stop offset="0" stop-color="${c3}"/><stop offset=".6" stop-color="${t.c}"/><stop offset="1" stop-color="${c2}"/>
+        </radialGradient></defs>
+        <circle cx="30" cy="30" r="22" fill="url(#sp${t.k})"/>
+        <g stroke="${c2}" stroke-width="1" opacity=".45" fill="none">
+          <path d="M12 24q18 10 36 0"/><path d="M11 30q19 10 38 0"/><path d="M12 36q18 10 36 0"/></g>
+        <circle cx="30" cy="30" r="6.5" fill="#FFF6DC" opacity=".9"/>`;
+    }
+    b.innerHTML = `<svg viewBox="0 0 60 60"><circle class="ring" cx="30" cy="30" r="26"/>${inner}</svg><span class="lbl">${t.n}</span>`;
+    b.addEventListener('click', () => pick(t.k));
+    bank.appendChild(b);
+  });
+  const div = document.createElement('div'); div.className = 'bank-div'; bank.appendChild(div);
+  const go = document.createElement('button');
+  go.className = 'btn btn-check'; go.id = 'btnCheck'; go.textContent = 'Check weave';
+  go.addEventListener('click', () => { Snd.boot(); evaluate(true); });
+  bank.appendChild(go);
+}
+function spoolTrail(el, color){
+  if (REDUCED || !el) return;
+  const host = $('#bankFx'); if (!host) return;
+  const r = el.getBoundingClientRect(), h = host.getBoundingClientRect();
+  const x = r.left - h.left + r.width / 2, y = r.top - h.top + r.height * .32;
+  const glow = document.createElement('span'); glow.className = 'sglow';
+  glow.style.cssText = `left:${x}px;top:${y}px;width:${r.width*1.7}px;height:${r.width*1.7}px;
+    background:radial-gradient(circle,${hexA(color,.55)},transparent 72%)`;
+  host.appendChild(glow); setTimeout(() => glow.remove(), 700);
+  for (let k = 0; k < 7; k++){
+    const s = document.createElement('span');
+    const a = rnd(-Math.PI * .86, -Math.PI * .14), d = rnd(24, 56), sz = rnd(3, 6.5);
+    s.className = 'strail'; s.style.color = color;
+    s.style.cssText += `left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;
+      background:radial-gradient(circle,#FFF8E2,${color});
+      --tx:${(Math.cos(a)*d).toFixed(1)}px;--ty:${(Math.sin(a)*d).toFixed(1)}px;animation-delay:${rnd(0,.08).toFixed(2)}s`;
+    host.appendChild(s); setTimeout(() => s.remove(), 950);
+  }
+}
+function pick(k){
+  S.tool = k;
+  $$('.spool').forEach(s => s.classList.toggle('sel', s.dataset.k === k));
+  const el = $(`.spool[data-k="${k}"]`), t = TOOLS.find(x => x.k === k);
+  spoolTrail(el, t ? t.c : '#FFE9B8');
+  Snd.boot(); Snd.blip();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   15. HELP WHEEL
+   ═══════════════════════════════════════════════════════════════ */
+function buildWheel(){
+  const s = $('#wheelFig'); let out = '';
+  for (let k = 0; k < 12; k++){
+    const a0 = (k * 30 - 105) * Math.PI / 180, a1 = ((k + 1) * 30 - 105) * Math.PI / 180;
+    const R = 104, r = 62, cx = 120, cy = 120;
+    const p = (rad, a) => `${(cx + rad * Math.cos(a)).toFixed(1)} ${(cy + rad * Math.sin(a)).toFixed(1)}`;
+    out += `<path d="M${p(R,a0)} A${R} ${R} 0 0 1 ${p(R,a1)} L${p(r,a1)} A${r} ${r} 0 0 0 ${p(r,a0)} Z"
+      fill="${HUES[k].c}" stroke="#F6E8C8" stroke-width="1.5"/>`;
+  }
+  out += `<circle cx="120" cy="120" r="54" fill="#F6E8C8"/>
+    <text x="120" y="112" text-anchor="middle" font-family="Marcellus,serif" font-size="13" fill="#6B4E1C">facing hues</text>
+    <text x="120" y="132" text-anchor="middle" font-family="Marcellus,serif" font-size="13" fill="#6B4E1C">cancel to ash</text>
+    <line x1="120" y1="66" x2="120" y2="174" stroke="#8A6220" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  s.innerHTML = out;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   15b. PARALLAX — the sky drifts a little with the finger or the tilt
+   ═══════════════════════════════════════════════════════════════ */
+const PLX = { tx:0, ty:0, cx:0, cy:0, layers:[], raf:null, on:false };
+function initParallax(){
+  if (REDUCED) return;
+  PLX.layers = $$('.plx,#isles').map(el => ({ el, d: +el.dataset.depth || 10 }));
+  if (!PLX.layers.length) return;
+  const set = (nx, ny) => { PLX.tx = clamp(nx, -.5, .5); PLX.ty = clamp(ny, -.5, .5); };
+  addEventListener('pointermove', e => set(e.clientX / innerWidth - .5, e.clientY / innerHeight - .5), { passive:true });
+  addEventListener('deviceorientation', e => {                 // silent no-op where permission/support is absent
+    if (e.gamma == null || e.beta == null) return;
+    set(clamp(e.gamma, -22, 22) / 44, clamp(e.beta - 45, -22, 22) / 44);
+  }, { passive:true });
+  const loop = () => {
+    PLX.cx += (PLX.tx - PLX.cx) * .06; PLX.cy += (PLX.ty - PLX.cy) * .06;
+    for (const { el, d } of PLX.layers)
+      el.style.transform = `translate3d(${(PLX.cx*d*2).toFixed(2)}px,${(PLX.cy*d*1.1).toFixed(2)}px,0)`;
+    PLX.raf = requestAnimationFrame(loop);
+  };
+  PLX.on = true; loop();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   16. WIRING
+   ═══════════════════════════════════════════════════════════════ */
+function undo(){
+  if (!S.hist.length) return toast('Nothing to unpick.');
+  const h = S.hist.pop();
+  S.grid = JSON.parse(h.g); S.strands = h.s;
+  repaint(); $('#strandN').textContent = S.strands; evaluate(false); Snd.blip();
+}
+function resetBoard(){
+  pushHist(); S.grid = Array(36).fill(null); S.strands = 0;
+  repaint(); $('#strandN').textContent = 0; evaluate(false);
+  toast('The frame is bare again.');
+}
+function soundIcon(){
+  $('#sndIcon').innerHTML = Snd.on
+    ? '<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 8.5a5 5 0 0 1 0 7"/>'
+    : '<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 9l5 6M22 9l-5 6"/>';
+}
+function moveCursor(dx, dy){
+  const r = clamp((S.cursor / 6 | 0) + dy, 0, 5), c = clamp(S.cursor % 6 + dx, 0, 5);
+  S.cursor = r * 6 + c;
+  cells.forEach((e, i) => e.tabIndex = i === S.cursor ? 0 : -1);
+  cells[S.cursor].focus();
+}
+
+function init(){
+  buildSky(); buildGrid(); buildBank(); buildWheel(); initParallax();
+  document.body.addEventListener('touchstart', () => {}, { passive:true }); // lets :active fire on iOS Safari
+  const st = load();
+  Snd.on = st.snd; soundIcon();
+  Music.vol = st.vol;
+  const vs = $('#musVol'); vs.value = Math.round(st.vol * 100); $('#musVolOut').textContent = vs.value + '%';
+  vs.addEventListener('input', () => { Music.setVol(vs.value / 100); $('#musVolOut').textContent = vs.value + '%'; });
+  vs.addEventListener('change', save);
+  $('#portrait').innerHTML = portraitSVG('narayana');
+  $('#portrait').dataset.who = 'narayana';
+  if (st.reached > 0 && st.reached < CHAPTERS.length){
+    $('#btnResume').hidden = false;
+    $('#resumeN').textContent = CHAPTERS[st.reached].no;
+  }
+
+  $('#btnBegin').addEventListener('click', () => { Snd.boot(); leaveTitle(() => say(INTRO, () => enterChapter(0))); });
+  $('#btnResume').addEventListener('click', () => { Snd.boot(); leaveTitle(() => enterChapter(load().reached)); });
+  $('#btnHelpTitle').addEventListener('click', () => $('#help').classList.add('on'));
+  $('#btnHelp').addEventListener('click', () => $('#help').classList.add('on'));
+  $('#btnHelpClose').addEventListener('click', () => $('#help').classList.remove('on'));
+  $('#btnCont').addEventListener('click', e => { e.stopPropagation(); advance(); });
+  $('#dlg').addEventListener('click', advance);
+  $('#btnNext').addEventListener('click', () => { S.finale ? location.reload() : nextStep(); });
+  $('#btnUndo').addEventListener('click', undo);
+  $('#btnReset').addEventListener('click', resetBoard);
+  $('#btnSound').addEventListener('click', () => {
+    Snd.on = !Snd.on; soundIcon(); save();
+    if (Snd.on){ Snd.boot(); Snd.chime(); }     // boot() brings the music in; the chime confirms it
+    else Music.stop();                           // fades out, then silences its voices
+  });
+  /* a hidden tab shouldn't keep a drone running in the background */
+  document.addEventListener('visibilitychange', () => {
+    const c = Snd.ctx; if (!c) return;
+    if (document.hidden) c.suspend().catch(() => {});
+    else if (Snd.on) c.resume().catch(() => {});
+  });
+
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape'){ $('#help').classList.remove('on'); return; }
+    if (S.phase === 'dialogue' && (e.key === ' ' || e.key === 'Enter')){ e.preventDefault(); advance(); return; }
+    if (S.phase !== 'play') return;
+    if (/^[1-7]$/.test(e.key)){ pick(TOOLS[+e.key - 1].k); return; }
+    if (e.key === 'z' || e.key === 'Z'){ undo(); return; }
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); apply(S.cursor); return; }
+    const mv = { ArrowLeft:[-1,0], ArrowRight:[1,0], ArrowUp:[0,-1], ArrowDown:[0,1] }[e.key];
+    if (mv){ e.preventDefault(); moveCursor(mv[0], mv[1]); }
+  });
+}
+function leaveTitle(then){
+  $('#title').classList.add('gone');
+  setTimeout(() => { $('#title').style.display = 'none'; then(); }, 700);
+}
+init();
+</script>
+</body>
+</html>
